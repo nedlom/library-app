@@ -11,24 +11,21 @@ class Genre {
     fetch(`${url}/genres`)
     .then(resp => resp.json())
     .then(json => {
-      json.forEach(obj => {
-        new Genre(obj.name)
-      })
-      this.renderGenres()
-      console.log(Genre.genres)
+      json.forEach(obj => this.createGenre(obj))
     })
   }
 
-  static renderGenres() {
-    const genreContainer = document.getElementById("genre-container")
-    const ul = document.createElement("ul")
-    genreContainer.appendChild(ul)
-    // document.appendChild(ul)
-    Genre.genres.forEach(genre => {
-      const li = document.createElement("li")
-      li.innerText = genre.name
-      ul.appendChild(li)
-    })
+  static createGenre(obj) {
+    const genre = new Genre(obj.name)
+    console.log(genre)
+    genre.renderGenre()
+  }
+
+  renderGenre() {
+    const genreList = document.getElementById("genre-list")
+    const li = document.createElement("li")
+    li.innerText = this.name
+    genreList.appendChild(li)
   }
 
 }
