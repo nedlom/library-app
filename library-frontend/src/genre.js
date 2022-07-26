@@ -2,7 +2,8 @@ class Genre {
 
   static genres = []
 
-  constructor(name) {
+  constructor(id, name) {
+    this.id = id
     this.name = name
     Genre.genres.push(this)
   }
@@ -16,16 +17,39 @@ class Genre {
   }
 
   static createGenre(obj) {
-    const genre = new Genre(obj.name)
-    console.log(genre)
+    const genre = new Genre(obj.id, obj.name)
     genre.renderGenre()
   }
 
   renderGenre() {
     const genreList = document.getElementById("genre-list")
+
+    const delBttn = document.createElement("button")
+    delBttn.innerText = "Delete"
+    delBttn.className = "delete"
+    delBttn.dataset.id = this.id
+
     const li = document.createElement("li")
     li.innerText = this.name
+    li.appendChild(delBttn)
+
+    delBttn.addEventListener("click", this.deleteGenre)
+
     genreList.appendChild(li)
   }
+
+  deleteGenre() {
+    event.preventDefault()
+    const id = this.dataset.id
+
+    fetch(`${url}/genres/${id}`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json"
+      }
+  })
+  this.parentElement.remove()
+}
+    
 
 }
