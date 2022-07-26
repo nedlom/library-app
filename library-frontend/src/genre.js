@@ -1,5 +1,6 @@
 class Genre {
 
+  static genreForm = document.getElementById("form-container")
   static genres = []
 
   constructor(id, name) {
@@ -19,6 +20,10 @@ class Genre {
   static createGenre(obj) {
     const genre = new Genre(obj.id, obj.name)
     genre.renderGenre()
+  }
+
+  static createForm() {
+    console.log(this.genreForm)
   }
 
   renderGenre() {
@@ -48,6 +53,8 @@ class Genre {
           "Content-Type": "application/json"
       }
   })
+
+  console.log(this.parentElement)
   this.parentElement.remove()
 }
     
