@@ -1,6 +1,7 @@
 class Book {
 
-  constructor(title, author, description) {
+  constructor(id, title, author, description) {
+    this.id = id 
     this.title = title
     this.author = author
     this.description = description
@@ -11,28 +12,36 @@ class Book {
 
     const h3 = document.createElement("h3")
     const p = document.createElement("p")
+    const del = document.createElement("button")
+
+    del.id = this.id
+    del.innerText = `Delete ${this.title}`
 
     h3.innerText = this.title
     p.innerText = `by ${this.author} \n\n ${this.description}`
 
-    
+    del.addEventListener("click", this.deleteBook)
+
     div.appendChild(h3)
     div.appendChild(p)
+    div.appendChild(del)
 
     return div
   }
 
-  deleteGenre() {
+  deleteBook() {
     event.preventDefault()
-    const id = this.dataset.id
+    // debugger
+    const id = this.id
 
-    fetch(`${url}/genres/${id}`, {
+    fetch(`${url}/books/${id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json"
         }
     })
     .catch(() => console.log("error"))
+
     this.parentElement.remove()
   }  
 
