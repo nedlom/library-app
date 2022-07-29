@@ -14,10 +14,16 @@ class Genre {
     .then(resp => resp.json())
     .then(json => {
       json.forEach(obj => {
+
+        
         const genre = new Genre(obj.id, obj.name, obj.books)
       })
       this.renderGenres()  
     })
+  }
+
+  static getBooks() {
+    this.genres
   }
 
   static renderGenres() {
@@ -35,13 +41,13 @@ class Genre {
     const li = document.createElement("li")
     li.innerText = this.name
 
-    // if (this.books !== []) {
-    //   let x = this.books[0].description
-    //   let p = document.createElement("p")
-    //   p.innerText = x
-    //   li.append(p)
-    //   // debugger
-    // }
+    if (this.books !== []) {
+      this.books.forEach(obj => {
+        const book = new Book(obj.id, obj.title, obj.author, obj.description)
+        const bookDiv = book.createBookDiv()
+        li.appendChild(bookDiv)
+      })
+  }
 
     li.appendChild(delBttn)
 
@@ -64,7 +70,7 @@ class Genre {
     })
     .then(resp => resp.json())
     .then(json => {
-      const genre = new Genre(json.id, json.name)
+      const genre = new Genre(json.id, json.name, json.books)
       genre.renderGenre()
      
     })
@@ -81,6 +87,7 @@ class Genre {
           "Content-Type": "application/json"
         }
     })
+    .catch(() => console.log("error"))
     this.parentElement.remove()
   }  
     
