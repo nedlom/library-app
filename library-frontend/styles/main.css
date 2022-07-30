@@ -13,7 +13,8 @@ body {
 h1 {
   text-align: center;
   font-size: 70px;
-  font-family: 'Lucida Handwriting';
+  font-family: 'Lucida Grande',
+  sans-serif;
   /* color:blanchedalmond; */
   color: black;
 }
@@ -22,7 +23,7 @@ ul {
   list-style-type:none;
 }
 
-li {
+#li-title {
   font-size: 22px;
   font-family:fantasy;
   text-transform: uppercase;
@@ -37,20 +38,21 @@ li {
   color:navy;
 }
 
-#submit {
-  /* background-color:lightslategrey; */
+/* #submit {
   background-color: blanchedalmond;
   font-family: 'Lucida Handwriting';
-  /* color:blanchedalmond; */
   font-weight: bold;
-
 }
 
 #genre-name {
   background-color:blanchedalmond;
 }
 
-#form-container {
+#genre-form-container {
   position: absolute;
   right: 0;
+} */
+
+#genre-form-container {
+  text-align: center;
 }
