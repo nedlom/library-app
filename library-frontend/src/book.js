@@ -7,6 +7,22 @@ class Book {
     this.description = description
   }
 
+  static renderBookForm() {
+    const form = document.createElement("form")
+    form.id = "book-form"
+
+    const titleLabel = document.createElement("label")
+    titleLabel.innerText = "Title"
+
+    const titleInput = document.createElement("input")
+
+    form.append(titleLabel, titleInput)
+
+    // form.appendChild(titleLabel)
+    // form.appendChild(titleInput)
+    return form
+  }
+
   createBookDiv() {
     const div = document.createElement("div")
 
@@ -28,6 +44,8 @@ class Book {
 
     return div
   }
+
+
 
   deleteBook() {
     event.preventDefault()
