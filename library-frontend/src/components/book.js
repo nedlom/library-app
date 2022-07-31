@@ -1,10 +1,11 @@
 class Book {
 
-  constructor(id, title, author, description) {
+  constructor(id, title, author, description, genre_id) {
     this.id = id 
     this.title = title
     this.author = author
     this.description = description
+    this.genre_id = genre_id
   }
 
   static renderBookForm() {
@@ -25,12 +26,14 @@ class Book {
 
   createBookDiv() {
     const div = document.createElement("div")
+    div.id = this.id
+    // div.className = this.genre_id
 
     const h3 = document.createElement("h3")
     const p = document.createElement("p")
     const del = document.createElement("button")
 
-    del.id = this.id
+    // del.id = this.id
     del.innerText = `Delete ${this.title}`
 
     h3.innerText = this.title
@@ -44,8 +47,6 @@ class Book {
 
     return div
   }
-
-
 
   deleteBook() {
     event.preventDefault()
