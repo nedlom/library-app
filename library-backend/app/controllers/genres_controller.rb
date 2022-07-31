@@ -5,7 +5,8 @@ class GenresController < ApplicationController
   def index
     @genres = Genre.all
 
-    render json: @genres, include: {books: {only: [:id, :title, :author, :description]}}
+    # render json: @genres, include: {books}
+    render json: @genres, except: [:created_at, :updated_at], include: {books: {except: [:created_at, :updated_at]}}
     # render json: @genres.to_json(include: {books: {only: [:title]}})
     # render json: authors.to_json(include: { books: {only: [:title]}})
 
