@@ -33,9 +33,13 @@ ul {
 
 .delete {
   /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */ 
-  margin: 4px 2px;
-  background-color:lightslategrey;
-  color:navy;
+  /* margin: 4px 2px; */
+  /* background-color:lightslategrey; */
+  /* color:navy; */
+  border: none;
+  position: absolute;
+  right: 0;
+  /* text-align: center; */
 }
 
 /* #submit {
@@ -55,4 +59,47 @@ ul {
 
 #genre-form-container {
   text-align: center;
+}
+
+.child {
+  display: inline-block;
+}
+
+#genre-delete {
+  position: absolute;
+  /* height: 500px; */
+  right: 0;
+}
+
+.flex-parent-element {
+  display: flex;
+  width: 100%;
+}
+
+.flex-child-element {
+  flex: 1;
+  /* border: 2px solid blueviolet; */
+  /* margin: 10px; */
+}
+
+/* .flex-child-element:first-child {
+  margin-right: 20px;
+} */
+
+.flex-child-element.green {
+  /* margin-right: 20px; */
+  text-align: right;
+}
+
+.parent {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  border: 1px solid red;
+  padding: 1rem 1rem;
+  vertical-align: middle;
 }
