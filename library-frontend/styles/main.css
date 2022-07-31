@@ -103,3 +103,8 @@ ul {
   padding: 1rem 1rem;
   vertical-align: middle;
 }
+
+.genre-div {
+  border: 1px solid black;
+  padding: 1rem 1rem;
+}
