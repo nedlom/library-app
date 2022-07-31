@@ -43,10 +43,7 @@ class GenreAdapter {
   }
 
   deleteGenre() {
-    // debugger
     event.preventDefault()
-    // const id = this.dataset.id
-    // debugger
 
     fetch(`${genreAdapter.url}/${this.id}`, {
       method: "DELETE",
@@ -55,7 +52,7 @@ class GenreAdapter {
         }
     })
     .catch(() => console.log("error"))
-    // debugger
+    
     document.getElementById(this.id).remove()
   }  
 
