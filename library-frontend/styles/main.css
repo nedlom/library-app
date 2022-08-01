@@ -108,3 +108,11 @@ ul {
   border: 1px solid black;
   padding: 1rem 1rem;
 }
+
+/* #add-book-button-container {
+  text-align: center;
+} */
+
+.add-book-to-genre {
+  text-align: center;
+}
