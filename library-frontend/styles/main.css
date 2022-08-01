@@ -42,28 +42,14 @@ ul {
   /* text-align: center; */
 }
 
-/* #submit {
-  background-color: blanchedalmond;
-  font-family: 'Lucida Handwriting';
-  font-weight: bold;
-}
-
-#genre-name {
-  background-color:blanchedalmond;
-}
-
-#genre-form-container {
-  position: absolute;
-  right: 0;
-} */
-
 #genre-form-container {
   text-align: center;
+
 }
 
-.child {
+/* .child {
   display: inline-block;
-}
+} */
 
 #genre-delete {
   position: absolute;
@@ -107,12 +93,33 @@ ul {
 .genre-div {
   border: 1px solid black;
   padding: 1rem 1rem;
+  margin-bottom: 25px;
 }
-
-/* #add-book-button-container {
-  text-align: center;
-} */
 
 .add-book-to-genre {
   text-align: center;
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+}
+
+.add-book-form {
+  text-align: center;
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  /* display: none; */
+}
+
+.no-display {
+  display: none;
+}
+
+
+.book-button-form {
+  display: block;
+  text-align: center;
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
 }
