@@ -38,7 +38,7 @@ class Genre {
     div.className = "genre-div"
     div.id = this.id
 
-    div.append(this.nameAndDelete())
+    div.append(this.nameAndDelete(), this.addBookButton())
 
     const bookDivs = this.bookTags()
     bookDivs.forEach(book => div.append(book))
@@ -68,8 +68,59 @@ class Genre {
     return button
   }
 
+  addBookButton() {
+    const buttonDiv = document.createElement("div")
+    // buttonDiv.id = "add-book-button-container"
+    buttonDiv.id = `genre-id-${this.id}`
+    buttonDiv.className = "add-book-to-genre"
+
+    const button = document.createElement("button")
+    button.id = `button${this.id}`
+    button.innerHTML = `Add Book To ${this.name}` 
+    // button.className = "add-book-to-genre"
+
+    buttonDiv.append(button)
+
+    button.addEventListener("click", this.removeBtnGetForm.bind(this))
+    
+    return buttonDiv
+  }
+
   bookTags() {
     return this.books.map(book => book.createBookDiv())
+  }
+
+  removeBtnGetForm() {
+    this.hideNewBookButton()
+    this.getBookForm()
+    // return Book.renderBookForm()
+  }
+
+  hideNewBookButton() {
+    // debugger
+
+    // const id = this.id
+    const div = document.getElementById(`button${this.id}`)
+
+    // const div = document.getElementById("add-book-to-genre")
+    if (div.style.display === "none") {
+      div.style.display = "block";
+    } else {
+      div.style.display = "none";
+    }
+  }
+
+  getBookForm() {
+    // debugger
+    
+    // const div = document.getElementById(this.id)
+    
+    const div = document.getElementById(`genre-id-${this.id}`)
+
+    // const bttnContainer = div.getElementById("add-book-button-container")
+    // const div = document.getElementById("add-book-button-container")
+    div.append(Book.createBookForm(this.id))
+    // bttnContainer.append(Book.createBookForm())
   }
 
   // renderGenre2() {
