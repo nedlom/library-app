@@ -14,15 +14,15 @@ class Book {
     form.className = "no-display"
 
     const titleInput = document.createElement("input")
-    titleInput.id = "title"
+    titleInput.id = `title-${genreId}`
     titleInput.placeholder = "Title"
 
     const authorInput = document.createElement("input")
-    authorInput.id = "author"
+    authorInput.id = `author-${genreId}`
     authorInput.placeholder = "Author"
 
     const descriptionTextarea = document.createElement("textarea")
-    descriptionTextarea.id = "description"
+    descriptionTextarea.id = `description-${genreId}`
     descriptionTextarea.placeholder = "Description"
 
     const submit = document.createElement("input")
@@ -88,22 +88,20 @@ class Book {
   }
     
   renderBook() {
-
-    const x = this.createBookDiv()
-
-    const y = document.getElementById(this.genre_id)
-
-    y.append(x)
+    const bookDiv = this.createBookDiv()
+    const genreDiv = document.getElementById(this.genre_id)
+    genreDiv.append(bookDiv)
   }
 
   static newBook() {
     event.preventDefault()
+    const id = this.dataset.id
    
     const book = {
-      title: document.getElementById("title").value,
-      author: document.getElementById("author").value, 
-      description: document.getElementById("description").value, 
-      genre_id: this.dataset.id
+      title: document.getElementById(`title-${id}`).value,
+      author: document.getElementById(`author-${id}`).value, 
+      description: document.getElementById(`description-${id}`).value, 
+      genre_id: id
     }
  
     fetch("http://127.0.0.1:3000/books", {
