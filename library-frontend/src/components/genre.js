@@ -83,12 +83,14 @@ class Genre {
   }
 
   bookFormDisplay() {
+    if (confirm("Press a button!")){
     const bookForm = document.querySelector(`[data-id="${this.id}"]`)
     if (bookForm.className === "no-display") {
       bookForm.className = "book-form-div"
     } else {
       bookForm.className = "no-display"
     }
+  }
   }
 
   bookFormDiv() {
@@ -124,7 +126,7 @@ class Genre {
 
   deleteButton() {
     const deleteButton = document.createElement("button")
-    deleteButton.innerHTML = "Delete Fiction Genre"
+    deleteButton.innerHTML = `Delete ${this.name} Genre`
     deleteButton.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
     return deleteButton
   }
