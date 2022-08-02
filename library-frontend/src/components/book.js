@@ -102,13 +102,11 @@ class Book {
   deleteButton() {
     const button = document.createElement("button")
     button.innerHTML = `Delete ${this.title}`
-    // button.addEventListener("click", this.deleteBook.bind(this))
     button.addEventListener("click", BookAdapter.deleteBook.bind(this))
     return button
   }
     
   renderBook() {
-    // debugger
     const bookDiv = this.createBookDiv()
     const genreDiv = document.getElementById(this.genre_id)
     const genreBooksDiv = genreDiv.querySelector(".books")
