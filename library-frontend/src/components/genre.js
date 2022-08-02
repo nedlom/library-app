@@ -9,6 +9,11 @@ class Genre {
     Genre.all.push(this)
   }
 
+  static getForm() {
+    const genreForm = document.getElementById("genre-form")
+    genreForm.addEventListener("submit", GenreAdapter.newGenre)
+  }
+
   getBooks(books) {
     if (books) {
       return books.map(book => new Book(
@@ -62,9 +67,9 @@ class Genre {
 
   deleteDiv() {
     const button = document.createElement("button")
-    button.className = "child"
+    button.className = "child-right"
     button.innerHTML = `Delete ${this.name}`
-    button.addEventListener("click", genreAdapter.deleteGenre.bind(this))
+    button.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
     return button
   }
 
