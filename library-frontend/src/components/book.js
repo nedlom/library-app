@@ -13,16 +13,11 @@ class Book {
 
   static createBookForm(genreId) {
     const form = document.createElement("form")
-    form.dataset.id = genreId
-    form.className = "no-display"
 
     form.append(
       this.titleInput(genreId),
-      this.linebrk(),
       this.authorInput(genreId),
-      this.linebrk(),
       this.descriptionInput(genreId),
-      this.linebrk(),
       this.submit()
       )
 
@@ -32,35 +27,43 @@ class Book {
   }
 
   static titleInput(genreId) {
+    const div = document.createElement("div")
+    div.className = "form-input"
     const titleInput = document.createElement("input")
     titleInput.id = `title-${genreId}`
     titleInput.placeholder = "Title"
-    return titleInput
+    div.append(titleInput)
+    return div
   }
 
   static authorInput(genreId) {
+    const div = document.createElement("div")
+    div.className = "form-input"
     const authorInput = document.createElement("input")
     authorInput.id = `author-${genreId}`
     authorInput.placeholder = "Author"
-    return authorInput
+    div.append(authorInput)
+    return div
   }
 
   static descriptionInput(genreId) {
+    const div = document.createElement("div")
+    div.className = "form-input"
     const descriptionInput = document.createElement("textarea")
     descriptionInput.id = `description-${genreId}`
     descriptionInput.placeholder = "Description"
-    return descriptionInput
+    div.append(descriptionInput)
+    return div
   }
 
   static submit() {
+    const div = document.createElement("div")
+    div.className = "form-input"
     const submit = document.createElement("input")
     submit.type = "submit"
     submit.value = "Add Book"
-    return submit
-  }
-
-  static linebrk() {
-    return document.createElement("br")
+    div.append(submit)
+    return div
   }
 
   createBookDiv() {
@@ -105,8 +108,10 @@ class Book {
   }
     
   renderBook() {
+    // debugger
     const bookDiv = this.createBookDiv()
     const genreDiv = document.getElementById(this.genre_id)
-    genreDiv.append(bookDiv)
+    const genreBooksDiv = genreDiv.querySelector(".books")
+    genreBooksDiv.append(bookDiv)
   }
 }
