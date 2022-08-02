@@ -4,7 +4,7 @@ class BookAdapter {
 
   static newBook() {
     event.preventDefault()
-    const id = this.dataset.id
+    const id = this.parentElement.dataset.id
    
     const book = {
       title: document.getElementById(`title-${id}`).value,
@@ -30,8 +30,7 @@ class BookAdapter {
     })
     
     this.reset()
-    this.className = "no-display"
-    this.parentElement.children[0].className = "" 
+    this.parentElement.className = "no-display"
   }
 
   static deleteBook() {
