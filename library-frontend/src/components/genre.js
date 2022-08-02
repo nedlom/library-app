@@ -42,63 +42,90 @@ class Genre {
     const div = document.createElement("div")
     div.className = "genre-div"
     div.id = this.id
-
-    div.append(this.nameAndDeleteDiv(), this.bookBtnAndFormDiv())
-
-    const bookDivs = this.bookTags()
-    bookDivs.forEach(book => div.append(book))
+    
+    div.append(
+      this.genreDivHeader(), 
+      this.bookFormDiv(),
+      this.genresBookDivs(),
+      this.deleteGenreBttnDiv()
+      )
     
     return div
   }
 
-  nameAndDeleteDiv() {
-    const div = document.createElement("div")
-    div.className = "parent"
-    div.append(this.nameDiv(), this.deleteDiv())
-    return div
+  genreDivHeader() {
+    const genreHeader = document.createElement("div")
+    genreHeader.className = "genre-header"
+
+    genreHeader.append(this.genreName(), this.bookButtonContainer())
+    return genreHeader
   }
 
-  nameDiv() {
-    const div = document.createElement("div")
-    div.className = "child"
-    div.innerHTML = this.name
-    return div
+  genreName() {
+    const genreNameDiv = document.createElement("div")
+    genreNameDiv.className = "genre-header-div-1"
+    genreNameDiv.innerHTML = this.name
+    return genreNameDiv
   }
 
-  deleteDiv() {
-    const button = document.createElement("button")
-    button.className = "child-right"
-    button.innerHTML = `Delete ${this.name}`
-    button.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
-    return button
-  }
-
-  bookBtnAndFormDiv() {
-    const buttonFormDiv = document.createElement("div")
-    buttonFormDiv.className = "book-button-form"
-    
-    buttonFormDiv.append(this.bookButton(), this.bookForm())
-    return buttonFormDiv
+  bookButtonContainer() {
+    const genreAddBookBttnDiv = document.createElement("div")
+    genreAddBookBttnDiv.className = "genre-header-div-2"
+    genreAddBookBttnDiv.append(this.bookButton())
+    return genreAddBookBttnDiv
   }
 
   bookButton() {
-    const button = document.createElement("button")
-    button.id = `button${this.id}`
-    button.innerHTML = `Add Book To ${this.name}` 
-    button.addEventListener("click", this.hideBookBtdDisplayForm)
-    return button
+    const bookButton = document.createElement("button")
+    bookButton.innerHTML = `Add Book To ${this.name}`
+    bookButton.addEventListener("click", this.bookFormDisplay.bind(this))
+    return bookButton
+  }
+
+  bookFormDisplay() {
+    const bookForm = document.querySelector(`[data-id="${this.id}"]`)
+    if (bookForm.className === "no-display") {
+      bookForm.className = "book-form-div"
+    } else {
+      bookForm.className = "no-display"
+    }
+  }
+
+  bookFormDiv() {
+    const bookFormDiv = document.createElement("div")
+    bookFormDiv.className = "no-display"
+    bookFormDiv.dataset.id = this.id
+    bookFormDiv.append(this.bookForm())
+    return bookFormDiv
   }
 
   bookForm() {
     return Book.createBookForm(this.id)
   }
 
-  hideBookBtdDisplayForm() {
-    this.parentElement.children[0].className = "no-display"
-    this.parentElement.children[1].className = ""
+  genresBookDivs() {
+    const bookDivContainer = document.createElement("div")
+    bookDivContainer.className = "books"
+    const bookDivs = this.bookTags()
+    bookDivs.forEach(book => bookDivContainer.append(book))
+    return bookDivContainer
   }
 
   bookTags() {
     return this.books.map(book => book.createBookDiv())
+  }
+
+  deleteGenreBttnDiv() {
+    const delButtonContainer = document.createElement("div")
+    delButtonContainer.className = "delete-genre"
+    delButtonContainer.append(this.deleteButton())
+    return delButtonContainer
+  }
+
+  deleteButton() {
+    const deleteButton = document.createElement("button")
+    deleteButton.innerHTML = "Delete Fiction Genre"
+    deleteButton.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
+    return deleteButton
   }
 }
