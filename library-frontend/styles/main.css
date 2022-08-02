@@ -13,64 +13,49 @@ h1 {
   text-align: center;
 }
 
-#genre-delete {
-  position: absolute;
-  right: 0;
-}
-
-.parent {
-  border: 1px solid black;
-  margin: 1rem;
-  padding: 1rem 1rem;
-}
-
-.child {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 25px;
-  font-family: 'Lucida Grande', sans-serif;
-  font-weight: bold;
-}
-
-.child-right {
-  float: right;
-  vertical-align: middle;
-}
-
 .genre-div {
   border: 1px solid black;
   padding: 1rem 1rem;
-  /* margin-bottom: 25px;
-  margin-top: 25px; */
-
   margin: 25px;
   background-color: white;
 }
-
-.add-book-to-genre {
-  text-align: center;
+.genre-header {
   border: 1px solid black;
   margin: 1rem;
-  padding: 2rem 2rem;
+  padding: 1rem 1rem;
 }
 
-.add-book-form {
-  text-align: center;
-  border: 1px solid black;
-  margin: 1rem;
-  padding: 2rem 2rem;
+.genre-header-div-1 {
+  display: inline-block;
+}
+
+.genre-header-div-2 {
+  float: right;
 }
 
 .no-display {
   display: none;
 }
 
-.book-button-form {
-  display: block;
-  text-align: center;
+.book-form-div {
   border: 1px solid black;
   margin: 1rem;
   padding: 1rem 1rem;
+  text-align: center;
+}
+
+.books {
+  border: solid black;
+}
+
+.delete-genre{
+  text-align: right;
+  border: 1px solid black;
+  margin: 1rem;
+}
+
+.form-input {
+  margin: 1rem;
 }
 
 .book-div {
@@ -78,4 +63,8 @@ h1 {
   margin: 1rem;
   padding: 1rem 1rem;
   font-family: 'Lucida Grande', sans-serif;
+}
+
+input[type=submit] {
+  cursor: pointer;
 }
