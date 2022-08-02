@@ -4,7 +4,7 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 70px;
+  font-size: 50px;
   font-family: 'Lucida Grande', sans-serif;
   color: black;
 }
@@ -21,21 +21,30 @@ h1 {
 .parent {
   border: 1px solid black;
   margin: 1rem;
-  padding: 2rem 2rem;
-  text-align: center;
+  padding: 1rem 1rem;
 }
 
 .child {
   display: inline-block;
-  border: 1px solid red;
-  padding: 1rem 1rem;
+  vertical-align: middle;
+  font-size: 25px;
+  font-family: 'Lucida Grande', sans-serif;
+  font-weight: bold;
+}
+
+.child-right {
+  float: right;
   vertical-align: middle;
 }
 
 .genre-div {
   border: 1px solid black;
   padding: 1rem 1rem;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px;
+  margin-top: 25px; */
+
+  margin: 25px;
+  background-color: white;
 }
 
 .add-book-to-genre {
@@ -61,5 +70,12 @@ h1 {
   text-align: center;
   border: 1px solid black;
   margin: 1rem;
-  padding: 2rem 2rem;
+  padding: 1rem 1rem;
+}
+
+.book-div {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 1rem 1rem;
+  font-family: 'Lucida Grande', sans-serif;
 }
