@@ -1,16 +1,18 @@
 class GenreAdapter {
 
-  constructor() {
-    this.url = "http://127.0.0.1:3000/genres"
-    this.getForm()
-  }
+  static url = "http://127.0.0.1:3000/genres"
 
-  getForm() {
-    const genreForm = document.getElementById("genre-form")
-    genreForm.addEventListener("submit", this.newGenre.bind(this))
-  }
+  // constructor() {
+  //   this.url = "http://127.0.0.1:3000/genres"
+  //   this.getForm()
+  // }
 
-  fetchGenres() {
+  // getForm() {
+  //   const genreForm = document.getElementById("genre-form")
+  //   genreForm.addEventListener("submit", this.newGenre.bind(this))
+  // }
+
+  static fetchGenres() {
     fetch(this.url)
     .then(res => res.json())
     .then(json => {
@@ -21,9 +23,11 @@ class GenreAdapter {
     })
   }
 
-  newGenre() {
+  static newGenre() {
     event.preventDefault()
-    fetch(this.url, {
+
+    // debugger
+    fetch(GenreAdapter.url, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -37,21 +41,20 @@ class GenreAdapter {
     .then(json => {
       const genre = new Genre(json.id, json.name, json.books)
       genre.renderGenre()
-     
     })
+
     document.getElementById("genre-form").reset()
   }
 
-  deleteGenre() {
+  static deleteGenre() {
     event.preventDefault()
-
-    fetch(`${genreAdapter.url}/${this.id}`, {
+    
+    fetch(`${GenreAdapter.url}/${this.id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json"
         }
     })
-    .catch(() => console.log("error"))
     
     document.getElementById(this.id).remove()
   }  
