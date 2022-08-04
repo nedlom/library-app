@@ -12,6 +12,11 @@ class Book {
   }
 
   static createBookForm(genreId) {
+    // const formDiv = document.createElement("div")
+    // formDiv.className = "book-form-div"
+    // formDiv.dataset.id = genreId
+
+    // debugger
     const form = document.createElement("form")
 
     form.append(
@@ -22,6 +27,8 @@ class Book {
       )
 
     form.addEventListener("submit", BookAdapter.newBook)
+
+    // formDiv.append(form)
 
     return form
   }
@@ -66,6 +73,10 @@ class Book {
     return div
   }
 
+  genre() {
+    return Genre.all.find(genre => this.genre_id === genre.id)
+  }
+
   createBookDiv() {
     const div = document.createElement("div")
     div.className = "book-div"
@@ -82,15 +93,17 @@ class Book {
   }
 
   bookTitle() {
-    const h4 = document.createElement("h4")
-    h4.innerHTML = this.title
-    return h4
+    const div = document.createElement("div")
+    div.innerHTML = this.title
+    div.className = "bold"
+    return div
   }
 
   bookAuthor() {
-    const p = document.createElement("p")
-    p.innerHTML = `by ${this.author}`
-    return p
+    const div = document.createElement("div")
+    div.innerHTML = `by ${this.author}`
+    div.className = "bold"
+    return div
   }
 
   bookDescription() {
@@ -101,15 +114,10 @@ class Book {
 
   deleteButton() {
     const button = document.createElement("button")
-    button.innerHTML = `Delete ${this.title}`
+    button.className = "book-delete"
+    button.innerHTML = "<i class='fa fa-trash'></i>"
+    // button.innerHTML = `Delete ${this.title}`
     button.addEventListener("click", BookAdapter.deleteBook.bind(this))
     return button
-  }
-    
-  renderBook() {
-    const bookDiv = this.createBookDiv()
-    const genreDiv = document.getElementById(this.genre_id)
-    const genreBooksDiv = genreDiv.querySelector(".books")
-    genreBooksDiv.append(bookDiv)
   }
 }
