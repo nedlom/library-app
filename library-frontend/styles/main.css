@@ -1,4 +1,4 @@
-body {
+/* body {
   background-color: rgb(238, 238, 238);
 }
 
@@ -14,12 +14,64 @@ h1 {
 }
 
 .genre-div {
-  border: 1px solid black;
+  border: solid green;
   padding: 1rem 1rem;
   margin: 25px;
   background-color: white;
+} */
+
+/* --------------------------------- */
+
+/* .genre-header {
+  display: flex;
+  width: 100%;
 }
-.genre-header {
+
+.genre-header-div {
+  flex: 1;
+  border: 2px solid blue;
+  margin: 10px;
+}
+
+.genre-header-div.first {
+  font-size: large;
+}
+
+.genre-header-div.second {
+  margin-right: 20px;
+  text-align: right;
+} */
+
+/* 
+--------------------------------------- */
+
+/* .genre-header {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+} */
+
+.genre-header-div-1 {
+  /* margin-right: 100%; */
+  display: inline-block;
+  /* border: 1px solid red; */
+  /* padding: 1rem 1rem; */
+  vertical-align: middle;
+  font-size: 30px;
+}
+
+.genre-header-div-2 {
+  margin-left: 400px;
+  display: inline-block;
+  /* border: 1px solid red; */
+  /* padding: 1rem 1rem; */
+  vertical-align: middle;
+}
+
+/* ---------------------- */
+/* NOO */
+/* .genre-header {
   border: 1px solid black;
   margin: 1rem;
   padding: 1rem 1rem;
@@ -31,14 +83,18 @@ h1 {
 
 .genre-header-div-2 {
   float: right;
-}
+} */
 
+/* ------------------------------------- */
+
+
+/* 
 .no-display {
   display: none;
 }
 
 .book-form-div {
-  border: 1px solid black;
+  border: 1px solid yellow;
   margin: 1rem;
   padding: 1rem 1rem;
   text-align: center;
@@ -50,7 +106,7 @@ h1 {
 
 .delete-genre{
   text-align: right;
-  border: 1px solid black;
+  border: 1px solid purple;
   margin: 1rem;
 }
 
@@ -59,7 +115,7 @@ h1 {
 }
 
 .book-div {
-  border: 1px solid black;
+  border: 1px solid orange;
   margin: 1rem;
   padding: 1rem 1rem;
   font-family: 'Lucida Grande', sans-serif;
@@ -67,4 +123,128 @@ h1 {
 
 input[type=submit] {
   cursor: pointer;
+}
+
+ */
+
+
+/* **************** */
+
+body {
+  /* background-color: rgb(238, 238, 238); */
+  background-color: black;
+}
+
+#title {
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Lucida Grande', sans-serif;
+  color: #2E8B57;
+  text-transform: uppercase;
+}
+
+#genre-form-container {
+  text-align: center;
+}
+
+#genre-container {
+}
+
+.genre-div {
+  border: 1rem solid;
+  border-color: #2E8B57;
+  padding: 1rem 1rem;
+  margin: 25px;
+  /* background-color: white; */
+  background-color: gray;
+}
+
+/* --------------------------------- */
+
+.genre-header {
+  display: flex;
+  width: 100%;
+}
+
+.genre-header-div {
+  flex: 1;
+  border: 2px solid blue;
+  /* margin: 50px; */
+}
+
+.genre-header-div.first {
+  /* margin-left: 1px; */
+  font-size: large;
+  font-weight: bold;
+  font-family: 'Lucida Grande', sans-serif;
+  text-decoration: underline;
+}
+
+.genre-header-div.second {
+  /* margin-right: 5px; */
+  text-align: right;
+  font-family: 'Lucida Grande', sans-serif;
+}
+
+.no-display {
+  display: none;
+}
+
+.book-form-div-container {
+  /* border: 1px solid yellow; */
+  border: 1px solid black;
+  /* margin: 1rem; */
+  /* padding: 1rem 1rem; */
+  /* padding: none; */
+  text-align: center;
+}
+
+.book-form-div {
+  display: inline-block;
+  border: solid;
+  background-color: white;
+}
+
+.form-input {
+  margin: 1rem;
+}
+
+.books {
+  border: solid black;
+}
+
+.book-div {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 1rem 1rem;
+  font-family: 'Lucida Grande', sans-serif;
+  background-color: white;
+  overflow: hidden;
+}
+
+.book-div.no-books {
+  text-transform: uppercase;
+}
+
+.delete-genre{
+  text-align: right;
+  border: 1px solid yellow;
+  /* margin: 1rem; */
+}
+
+
+
+
+
+input[type=submit] {
+  cursor: pointer;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.book-delete {
+  /* float: right;
+  overflow: hidden; */
 }
