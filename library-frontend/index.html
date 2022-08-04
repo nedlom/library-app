@@ -1,31 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library App</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styles/main.css"/>
-</head>
-<body>
-  <div id="container">
-    <h1>Book Tracker</h1>
+<!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/main.css"/>
+  </head>
+  <body>
+    <div id="container">
+      <h1 id="title">Book Tracker</h1>
 
-    <div id="genre-form-container">
-      <form id="genre-form">
-        <input type="text" id="genre-name">
-        <input type="submit" id="submit" value="Create Genre">
-      </form>
+      <div id="genre-form-container">
+        <form id="genre-form">
+          <input type="text" id="genre-name">
+          <input type="submit" id="submit" value="Create Genre">
+        </form>
+      </div>
+      
+      <div id="genre-container">
+      </div>
     </div>
-    
-    <div id="genre-container">
-    </div>
-  </div>
-  <script src="src/adapters/bookAdapter.js"></script>
-  <script src="src/adapters/genreAdapter.js"></script>
-  <script src="src/components/book.js"></script>
-  <script src="src/components/genre.js"></script>
-  <script src="src/index.js"></script>
-</body>
-</html>
+    <script src="src/adapters/bookAdapter.js"></script>
+    <script src="src/adapters/genreAdapter.js"></script>
+    <script src="src/components/book.js"></script>
+    <script src="src/components/genre.js"></script>
+    <script src="src/index.js"></script>
+  </body>
+  </html>
