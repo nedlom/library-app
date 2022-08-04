@@ -14,6 +14,10 @@ class Genre {
     genreForm.addEventListener("submit", GenreAdapter.newGenre)
   }
 
+  static findById(id) {
+    return this.all.find(x => x.id === parseInt(id))
+  }
+
   getBooks(books) {
     if (books) {
       return books.map(book => new Book(
@@ -44,16 +48,17 @@ class Genre {
     div.id = this.id
     
     div.append(
-      this.genreDivHeader(), 
-      this.bookFormDiv(),
-      this.genresBookDivs(),
+      this.genreHeader(), 
+      // this.bookFormDiv(),
+      this.bookFormDivContainer(),
+      this.genreBooksContainer(),
       this.deleteGenreBttnDiv()
       )
     
     return div
   }
 
-  genreDivHeader() {
+  genreHeader() {
     const genreHeader = document.createElement("div")
     genreHeader.className = "genre-header"
 
@@ -63,40 +68,64 @@ class Genre {
 
   genreName() {
     const genreNameDiv = document.createElement("div")
-    genreNameDiv.className = "genre-header-div-1"
+    // genreNameDiv.className = "genre-header-div-1"
+
+    genreNameDiv.className = "genre-header-div first"
+
     genreNameDiv.innerHTML = this.name
+
+    // const genName = document.createElement("h3")
+    // genName.innerHTML = this.name
+    // genreNameDiv.append(genName)
+
     return genreNameDiv
   }
 
   bookButtonContainer() {
     const genreAddBookBttnDiv = document.createElement("div")
-    genreAddBookBttnDiv.className = "genre-header-div-2"
+    // genreAddBookBttnDiv.className = "genre-header-div-2"
+
+    genreAddBookBttnDiv.className = "genre-header-div second"
+
     genreAddBookBttnDiv.append(this.bookButton())
     return genreAddBookBttnDiv
   }
 
   bookButton() {
     const bookButton = document.createElement("button")
-    bookButton.innerHTML = `Add Book To ${this.name}`
+    // bookButton.innerHTML = `Add Book To ${this.name}`
+    bookButton.innerHTML = "+"
     bookButton.addEventListener("click", this.bookFormDisplay.bind(this))
     return bookButton
   }
 
   bookFormDisplay() {
-    if (confirm("Press a button!")){
-    const bookForm = document.querySelector(`[data-id="${this.id}"]`)
+    // const bookForm = document.querySelector(`[data-id="${this.id}"]`)
+    const bookForm = document.getElementById(`book-form-div-container-${this.id}`)
     if (bookForm.className === "no-display") {
-      bookForm.className = "book-form-div"
+      // bookForm.className = "book-form-div"
+      bookForm.className = "book-form-div-container"
     } else {
       bookForm.className = "no-display"
     }
   }
+
+  bookFormDivContainer() {
+    const bookFormDivContainer = document.createElement("div")
+    bookFormDivContainer.id = `book-form-div-container-${this.id}`
+    bookFormDivContainer.className = "no-display"
+    // bookFormDivContainer.dataset.id = this.id
+    // bookFormDivContainer.id = `form-${this.id}`
+    // debugger
+    bookFormDivContainer.append(this.bookFormDiv())
+    return bookFormDivContainer
   }
 
   bookFormDiv() {
     const bookFormDiv = document.createElement("div")
-    bookFormDiv.className = "no-display"
+    bookFormDiv.className = "book-form-div"
     bookFormDiv.dataset.id = this.id
+    // bookFormDiv.dataset.id = this.id
     bookFormDiv.append(this.bookForm())
     return bookFormDiv
   }
@@ -105,15 +134,40 @@ class Genre {
     return Book.createBookForm(this.id)
   }
 
-  genresBookDivs() {
+
+  // bookFormDiv() {
+  //   const bookFormDiv = document.createElement("div")
+  //   bookFormDiv.className = "no-display"
+  //   bookFormDiv.dataset.id = this.id
+  //   bookFormDiv.append(this.bookForm())
+  //   return bookFormDiv
+  // }
+
+  genreBooksContainer() {
     const bookDivContainer = document.createElement("div")
     bookDivContainer.className = "books"
-    const bookDivs = this.bookTags()
-    bookDivs.forEach(book => bookDivContainer.append(book))
+    // const bookDivs = this.bookDivs()
+
+    // debugger
+    
+    if (this.hasBooks()) {
+      const bookDivs = this.bookDivs()
+      bookDivs.forEach(book => bookDivContainer.append(book))
+    } else {
+      const noBooks = document.createElement("div")
+      noBooks.className = "book-div no-books"
+      noBooks.innerHTML = `${this.name} genre empty.`
+      bookDivContainer.append(noBooks)
+    }
+
     return bookDivContainer
   }
 
-  bookTags() {
+  hasBooks () {
+    return this.books.length !== 0
+  }
+
+  bookDivs() {
     return this.books.map(book => book.createBookDiv())
   }
 
@@ -126,7 +180,7 @@ class Genre {
 
   deleteButton() {
     const deleteButton = document.createElement("button")
-    deleteButton.innerHTML = `Delete ${this.name} Genre`
+    deleteButton.innerHTML = "<i class='fa fa-trash'></i>"
     deleteButton.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
     return deleteButton
   }
