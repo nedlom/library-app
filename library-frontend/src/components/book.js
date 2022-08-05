@@ -24,21 +24,29 @@ class Book {
 
   static createBookForm() {
     const form = document.createElement("form")
-    // debugger
-    // form.innerHTML = `
-    //   <div>
-    //     <input type='text' placeholder='hi'>
-    //   </div>`
-    form.append(
-      this.titleInput(),
-      this.authorInput(),
-      this.descriptionInput(),
-      this.submit()
-      )
-
+    form.innerHTML = `
+      <input class='a' type='text' placeholder='hi'><br>
+      <input class='a' type='text' placeholder='hi'><br>
+      <textarea class='a'placeholder='hi'></textarea><br>
+      <input class='a' type='submit' value='Add Book'>
+      `
     form.addEventListener("submit", BookAdapter.newBook)
     return form
   }
+
+  // static createBookForm2() {
+  //   const form = document.createElement("form")
+  
+  //   form.append(
+  //     this.titleInput(),
+  //     this.authorInput(),
+  //     this.descriptionInput(),
+  //     this.submit()
+  //     )
+
+  //   form.addEventListener("submit", BookAdapter.newBook)
+  //   return form
+  // }
 
   static textInput(tagname, id, classname, placeholder) {
     const div = document.createElement("div")
