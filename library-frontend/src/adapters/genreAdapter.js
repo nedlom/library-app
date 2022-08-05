@@ -7,7 +7,14 @@ class GenreAdapter {
     .then(res => res.json())
     .then(json => {
       json.forEach(obj => {
-        const genre = new Genre(obj.id, obj.name, obj.books)
+        // debugger
+        const genre = new Genre(obj.id, obj.name)
+
+        Book.initBooks(obj.books)
+        // obj.books.forEach(book => {
+        //   new Book(book.id, book.title, book.author, book.description, book.genre_id)
+        // })
+        // debugger
       })
       Genre.renderGenres()
     })
