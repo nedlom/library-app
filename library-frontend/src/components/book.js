@@ -11,66 +11,105 @@ class Book {
     Book.all.push(this)
   }
 
-  static createBookForm(genreId) {
-    // const formDiv = document.createElement("div")
-    // formDiv.className = "book-form-div"
-    // formDiv.dataset.id = genreId
+  static initBooks(array) {
+    array.forEach(obj => {
+      new Book(obj.id, obj.title, obj.author, obj.description, obj.genre_id)
+    })
+  }
 
-    // debugger
+  static delete(book) {
+    // Book.all = Book.all.filter(b => b.id !== book.id )
+    Book.all.splice(Book.all.indexOf(book), 1)
+  }
+
+  static createBookForm() {
     const form = document.createElement("form")
-
+    // debugger
+    // form.innerHTML = `
+    //   <div>
+    //     <input type='text' placeholder='hi'>
+    //   </div>`
     form.append(
-      this.titleInput(genreId),
-      this.authorInput(genreId),
-      this.descriptionInput(genreId),
+      this.titleInput(),
+      this.authorInput(),
+      this.descriptionInput(),
       this.submit()
       )
 
     form.addEventListener("submit", BookAdapter.newBook)
-
-    // formDiv.append(form)
-
     return form
   }
 
-  static titleInput(genreId) {
+  static textInput(tagname, id, classname, placeholder) {
     const div = document.createElement("div")
-    div.className = "form-input"
-    const titleInput = document.createElement("input")
-    titleInput.id = `title-${genreId}`
-    titleInput.placeholder = "Title"
-    div.append(titleInput)
-    return div
+    div.className = "form-input-div"
+
+    const element = document.createElement(tagname)
+    element.id = id
+    element.className = classname
+    element.placeholder = placeholder
+
+    return element
   }
 
-  static authorInput(genreId) {
-    const div = document.createElement("div")
-    div.className = "form-input"
-    const authorInput = document.createElement("input")
-    authorInput.id = `author-${genreId}`
-    authorInput.placeholder = "Author"
-    div.append(authorInput)
-    return div
+  // static formSubmitInput
+
+  // static divMaker() {
+  //   const formInputDiv = document.createElement("div")
+  //   formInputDiv.className = "form-input-div"
+  //   return formInputDiv
+  // }
+
+  static titleInput() {
+    const obj = {classname: "input", id: "title", placeholder: "Title"}    
+    return this.formInput("input", obj)
   }
 
-  static descriptionInput(genreId) {
-    const div = document.createElement("div")
-    div.className = "form-input"
-    const descriptionInput = document.createElement("textarea")
-    descriptionInput.id = `description-${genreId}`
-    descriptionInput.placeholder = "Description"
-    div.append(descriptionInput)
-    return div
+  static authorInput() {
+    const obj = {classname: "input", id: "author", placeholder: "Author"}
+    return this.formInput("input", obj)
+  }
+
+  static descriptionInput() {
+    const obj = {classname: "input", id: "description", placeholder: "Description"}
+    return this.formInput("textarea", obj)
   }
 
   static submit() {
-    const div = document.createElement("div")
-    div.className = "form-input"
-    const submit = document.createElement("input")
-    submit.type = "submit"
-    submit.value = "Add Book"
-    div.append(submit)
-    return div
+    const obj = {type: "submit", value: "Add Book"}
+    return this.formInput("input", obj)
+  }
+
+  static formInput(tagname, obj={}) {
+    const formInputDiv = document.createElement("div")
+    formInputDiv.className = "form-input-div"
+
+    const formInput = document.createElement(tagname)
+    for(const key in obj) {
+      if (key === "id") {
+        formInput.id = obj[key]
+      }
+      if (key === "placeholder") {
+        formInput.placeholder = obj[key]
+      }
+      if (key === "classname") {
+        formInput.className = obj[key]
+      }
+      if (key === "type") {
+        formInput.type = obj[key]
+      }
+      if (key === "value") {
+        formInput.value = obj[key]
+      }
+      if (key === "className") {
+        div.className = obj[key]
+      }
+      if (key === "innerHTML") {
+        div.innerHTML = obj[key]
+      }
+    }  
+    formInputDiv.append(formInput)
+    return formInputDiv
   }
 
   genre() {
@@ -92,31 +131,38 @@ class Book {
     return div
   }
 
+  formInput(tagname, obj) {
+    const formInput = document.createElement(tagname)
+    for(const key in obj) {
+      if (key === "className") {
+        formInput.className = obj[key]
+      }
+      if (key === "innerHTML") {
+        formInput.innerHTML = obj[key]
+      }
+    }  
+    return formInput
+  }
+
   bookTitle() {
-    const div = document.createElement("div")
-    div.innerHTML = this.title
-    div.className = "bold"
-    return div
+    const obj = {innerHTML: this.title, className: "bold"}
+    return this.formInput("div", obj)
   }
 
   bookAuthor() {
-    const div = document.createElement("div")
-    div.innerHTML = `by ${this.author}`
-    div.className = "bold"
-    return div
+    const obj = {innerHTML: `by ${this.author}`, className: "bold"}
+    return this.formInput("div", obj)
   }
 
   bookDescription() {
-    const p = document.createElement("p")
-    p.innerHTML = this.description
-    return p
+    const obj = {innerHTML: this.description}
+    return this.formInput("p", obj)
   }
 
   deleteButton() {
     const button = document.createElement("button")
     button.className = "book-delete"
     button.innerHTML = "<i class='fa fa-trash'></i>"
-    // button.innerHTML = `Delete ${this.title}`
     button.addEventListener("click", BookAdapter.deleteBook.bind(this))
     return button
   }
