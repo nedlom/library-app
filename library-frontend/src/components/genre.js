@@ -106,11 +106,7 @@ class Genre {
   }
 
   bookForm() {
-    // return Book.createBookForm.call(this)
     return Book.createBookForm()
-    // debugger
-    // const x = `<form><input type='text' value='hi'></form>`
-    // return x
   }
 
   genreBooksContainer() {
