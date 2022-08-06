@@ -5,12 +5,14 @@ class BookAdapter {
   static newBook() {
     event.preventDefault()
 
-    const formInputs = this.querySelectorAll(".input")
-    const book = {}
-    formInputs.forEach(input => {
-      book[input.id] = input.value
-    })
-    book["genre_id"] = this.parentElement.dataset.id
+    const book = {
+      title: this.bookForm().children[0].value,
+      author: this.bookForm().children[2].value,
+      description: this.bookForm().children[4].value,
+      genre_id: this.id
+    }
+
+    // debugger
     
     fetch(BookAdapter.url, {
       method: "POST",
@@ -24,33 +26,34 @@ class BookAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      const book = new Book(json.id, json.title, json.author, json.description, json.genre_id)
-      const genre = Genre.findById(book.genre_id)
-      genre.books().push(book)
-
-      const genreDiv = document.getElementById(genre.id)
-      genreDiv.innerHTML = ""
-
-      genre.appendChildren(genreDiv)
+      new Book(json.id, json.title, json.author, json.description, json.genre_id)
+      this.booksDiv().innerHTML = ""
+      this.bookCards()
+      this.bookListener()
+      this.form().reset()
+      this.formDisplay()
     })
   }
 
   static deleteBook() {
     event.preventDefault()  
+
+    const id = this.dataset.id
     
-    fetch(`${BookAdapter.url}/${this.id}`, {
+    fetch(`${BookAdapter.url}/${id}`, {
       method: "DELETE",
       headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
         } 
-    }).then(() => { 
-      const genre = this.genre()
-      Book.delete(this)
-      
-      const genreDiv = document.getElementById(genre.id)
-      genreDiv.innerHTML = ""
-
-      genre.appendChildren(genreDiv)
-    }) 
+    })
+    .then(() => {
+      const book = Book.findById(parseInt(id))
+      const genre = book.genre()
+      Book.delete(book)
+      genre.booksDiv().innerHTML = ""
+      genre.bookCards()
+      genre.bookListener()
+    })
   }  
 }

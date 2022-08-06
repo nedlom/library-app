@@ -13,142 +13,116 @@ class Genre {
     genreForm.addEventListener("submit", GenreAdapter.newGenre)
   }
 
-  static findById(id) {
-    return this.all.find(x => x.id === parseInt(id))
-  }
-
   static renderGenres() {
     this.all.forEach(genre => genre.renderGenre())
+  }
+
+  renderGenre() {
+    const genreContainer = document.getElementById("genre-container")
+    const genreDiv = document.createElement("div")
+    genreDiv.className = "genre-div"
+    genreDiv.id = this.id
+    genreDiv.innerHTML = this.genreElements()
+    genreContainer.append(genreDiv)
+    this.bookCards()
+    this.eventListeners()
+  }
+
+  genreElements() {
+    return `
+      <div class='header'>
+        <div class='header-div'>${this.name}</div>
+        <div class='header-div'>
+          <button class='show-form'>+</button>
+        </div>
+      </div>
+
+      <div class='block'>
+        <div class='form-container-outer no-display'>
+          <div class='form-container-inner'>
+            <form>
+              <input class='book-field' placeholder='Title'><br>
+              <input class='book-field' placeholder='Author'><br>
+              <textarea class='book-field' placeholder='Description'></textarea><br>
+              <input class='book-field' type='submit' value='Add Book'>
+            </form> 
+          </div>
+        </div>
+      </div>
+
+      <div class='block'>
+        <div class='books'>
+        </div>
+      </div>
+
+      <div class='footer'>
+        <button><i class='fa fa-trash'></i></button>
+      </div>
+    `
+  }
+
+  bookCards() {
+    if (this.hasBooks()) {
+      this.books().forEach(book => this.booksDiv().innerHTML += book.bookCard())
+    } else {
+      this.booksDiv().innerHTML = this.noBooks()
+    }
+  }
+
+  hasBooks() {
+    return this.books().length !== 0
+  }
+
+  booksDiv() {
+    return this.div().querySelector(".books")
+  }
+
+  noBooks() {
+    return `<div class='card'>${this.name} Genre Empty</di>`
   }
 
   books() {
     return Book.all.filter(book => book.genre_id === this.id)
   }
 
-  renderGenre() {
-    const genreContainer = document.getElementById("genre-container")
-    const genreDiv = this.createGenreDiv()
-    genreContainer.append(genreDiv)
+  eventListeners() {
+    this.showFormBttn().addEventListener("click", this.bookFormDisplay.bind(this))
+    this.bookForm().addEventListener("submit", BookAdapter.newBook.bind(this))
+    this.deleteBookListener()
+    this.genreDelBttn().addEventListener("click", GenreAdapter.delete.bind(this))
   }
 
-  createGenreDiv() {
-    const div = document.createElement("div")
-    div.className = "genre-div"
-    div.id = this.id
-    
-    this.appendChildren(div)
-    
-    return div
+  div() {
+    return document.getElementById(this.id)
   }
 
-  appendChildren(parent) {
-    parent.append(
-      this.genreHeader(), 
-      this.bookFormDivContainer(),
-      this.genreBooksContainer(),
-      this.deleteGenreBttnDiv()
-      )
+  showFormBttn() {
+    return this.div().querySelector(`.show-form`)
   }
 
-  genreHeader() {
-    const genreHeader = document.createElement("div")
-    genreHeader.className = "genre-header"
-
-    genreHeader.append(this.genreName(), this.bookButtonContainer())
-    return genreHeader
+  bookFormDisplay() {    
+    this.formContainer().classList.toggle("no-display")
   }
-
-  genreName() {
-    const genreNameDiv = document.createElement("div")
-    genreNameDiv.className = "genre-header-div first"
-    genreNameDiv.innerHTML = this.name
-    return genreNameDiv
-  }
-
-  bookButtonContainer() {
-    const genreAddBookBttnDiv = document.createElement("div")
-    genreAddBookBttnDiv.className = "genre-header-div second"
-    genreAddBookBttnDiv.append(this.bookButton())
-    return genreAddBookBttnDiv
-  }
-
-  bookButton() {
-    const bookButton = document.createElement("button")
-    bookButton.innerHTML = "+"
-    bookButton.addEventListener("click", this.bookFormDisplay.bind(this))
-    return bookButton
-  }
-
-  bookFormDisplay() {
-    const bookForm = document.getElementById(`book-form-div-container-${this.id}`)
-    if (bookForm.className === "no-display") {
-      bookForm.className = "book-form-div-container"
-    } else {
-      bookForm.className = "no-display"
-    }
-  }
-
-  bookFormDivContainer() {
-    const bookFormDivContainer = document.createElement("div")
-    bookFormDivContainer.id = `book-form-div-container-${this.id}`
-    bookFormDivContainer.className = "no-display"
-    bookFormDivContainer.append(this.bookFormDiv())
-    return bookFormDivContainer
-  }
-
-  bookFormDiv() {
-    const bookFormDiv = document.createElement("div")
-    bookFormDiv.className = "book-form-div"
-    bookFormDiv.dataset.id = this.id
-    bookFormDiv.append(this.bookForm())
-    // bookFormDiv.innerHTML = this.bookForm()
-    return bookFormDiv
+  
+  formContainer() {
+    return this.div().querySelector(".form-container-outer")
   }
 
   bookForm() {
-    return Book.createBookForm()
+    return this.div().querySelector('form')
   }
 
-  genreBooksContainer() {
-    const bookDivContainer = document.createElement("div")
-    bookDivContainer.className = "books"
-    if (this.checkForBooks()) {
-      this.genreHasBooks(bookDivContainer)
-    } else {
-      this.genreHasNoBooks(bookDivContainer)
-    }
-    return bookDivContainer
+  bookDelBtns() {
+    return this.booksDiv().querySelectorAll("button")
   }
 
-  checkForBooks() {
-    return this.books().length !== 0
-  }
-
-  genreHasBooks(container) {
-    this.books().forEach(book => {
-      const bookDiv = book.createBookDiv()
-      container.append(bookDiv)
+  deleteBookListener() {
+    this.bookDelBtns().forEach(button => {
+      button.addEventListener("click", BookAdapter.deleteBook)
     })
   }
 
-  genreHasNoBooks(container) {
-    const noBooks = document.createElement("div")
-    noBooks.className = "book-div no-books"
-    noBooks.innerHTML = `${this.name} genre empty.`
-    container.append(noBooks)
-  }
-
-  deleteGenreBttnDiv() {
-    const delButtonContainer = document.createElement("div")
-    delButtonContainer.className = "delete-genre"
-    delButtonContainer.append(this.deleteButton())
-    return delButtonContainer
-  }
-
-  deleteButton() {
-    const deleteButton = document.createElement("button")
-    deleteButton.innerHTML = "<i class='fa fa-trash'></i>"
-    deleteButton.addEventListener("click", GenreAdapter.deleteGenre.bind(this))
-    return deleteButton
+  genreDelBttn() {
+    return this.div().querySelector(".footer button")
   }
 }

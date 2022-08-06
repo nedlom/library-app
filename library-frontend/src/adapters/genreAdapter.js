@@ -7,14 +7,8 @@ class GenreAdapter {
     .then(res => res.json())
     .then(json => {
       json.forEach(obj => {
-        // debugger
         const genre = new Genre(obj.id, obj.name)
-
         Book.initBooks(obj.books)
-        // obj.books.forEach(book => {
-        //   new Book(book.id, book.title, book.author, book.description, book.genre_id)
-        // })
-        // debugger
       })
       Genre.renderGenres()
     })
@@ -42,8 +36,9 @@ class GenreAdapter {
     document.getElementById("genre-form").reset()
   }
 
-  static deleteGenre() {
+  static delete() {
     event.preventDefault()
+
     if ( confirm(`This will delete the entire` + 
       ` ${this.name} genre and all the books in` +
       ` it. Click OK if you want to proceed.`)
@@ -54,7 +49,7 @@ class GenreAdapter {
             "Content-Type": "application/json"
           }
       })
-        
+      
       document.getElementById(this.id).remove()
     }
   }  
