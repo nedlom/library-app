@@ -8,11 +8,10 @@ class Genre {
     Genre.all.push(this)
   }
 
-  static getForm() {
-    const genreForm = document.getElementById("genre-form")
-    genreForm.addEventListener("submit", GenreAdapter.newGenre)
+  static noGenres() {
+    return Genre.all.length === 0
   }
-
+  
   static renderGenres() {
     this.all.forEach(genre => genre.renderGenre())
   }
@@ -33,18 +32,24 @@ class Genre {
       <div class='header'>
         <div class='header-div'>${this.name}</div>
         <div class='header-div'>
-          <button class='show-form'>+</button>
+          <button class='window-1'><i class="fa fa-window-close"></i></button>
+          <button class='window-2'><i class="fa fa-window-maximize"></i></button>
+          <button class='window-3'><i class="fa fa-window-minimize"></i></button>
         </div>
       </div>
 
       <div class='block'>
+        <div class='add-book'>
+          <button class='add-book-button'>Add Book To ${this.name}</button>
+        </div>
         <div class='form-container-outer no-display'>
           <div class='form-container-inner'>
             <form>
               <input class='book-field' placeholder='Title'><br>
               <input class='book-field' placeholder='Author'><br>
               <textarea class='book-field' placeholder='Description'></textarea><br>
-              <input class='book-field' type='submit' value='Add Book'>
+              
+              <button type="submit"><i class="fa fa-solid fa-plus"></i></button>
             </form> 
           </div>
         </div>
@@ -54,18 +59,64 @@ class Genre {
         <div class='books'>
         </div>
       </div>
-
-      <div class='footer'>
-        <button><i class='fa fa-trash'></i></button>
-      </div>
     `
   }
 
+  // ---------
+  div() {
+    return document.getElementById(this.id)
+  }
+  minBtn() {
+    return this.div().querySelector(".window-3")
+  }
+  maxBtn() {
+    return this.div().querySelector(".window-2")
+  }
+  closeBtn() {
+    return this.div().querySelector(".window-1")
+  }
+  blocks() {
+    return this.div().querySelectorAll(".block")
+  }
+  formOuterContainer() {
+    return this.div().querySelector('.form-container-outer')
+  }
+  addBookDiv() {
+    return this.div().querySelector(".add-book")
+  }
+  addBookBtn() {
+    return this.addBookDiv().querySelector("button")
+  }
+  bookForm() {
+    return this.div().querySelector('form')
+  }
+
+  // -------
+
+  minimize() {
+    this.blocks().forEach(block => block.classList.add("no-display"))
+  }
+  maximize() {
+    this.blocks().forEach(block => block.classList.remove("no-display"))
+  }
+  toggleForm() {
+    this.formOuterContainer().classList.toggle("no-display")
+  }
+  // -------------
+  eventListeners() {
+    this.minBtn().addEventListener("click", this.minimize.bind(this))
+    this.maxBtn().addEventListener("click", this.maximize.bind(this))
+    this.closeBtn().addEventListener("click", GenreAdapter.delete.bind(this))
+    this.addBookBtn().addEventListener("click", this.toggleForm.bind(this))
+    this.bookForm().addEventListener("submit", BookAdapter.newBook.bind(this))
+    this.bookDelBtnListeners()
+  }
+  
   bookCards() {
     if (this.hasBooks()) {
-      this.books().forEach(book => this.booksDiv().innerHTML += book.bookCard())
+      this.books().forEach(book => this.bookDiv().innerHTML += book.bookCard())
     } else {
-      this.booksDiv().innerHTML = this.noBooks()
+      this.bookDiv().innerHTML = this.noBooks()
     }
   }
 
@@ -73,7 +124,7 @@ class Genre {
     return this.books().length !== 0
   }
 
-  booksDiv() {
+  bookDiv() {
     return this.div().querySelector(".books")
   }
 
@@ -84,45 +135,14 @@ class Genre {
   books() {
     return Book.all.filter(book => book.genre_id === this.id)
   }
-
-  eventListeners() {
-    this.showFormBttn().addEventListener("click", this.bookFormDisplay.bind(this))
-    this.bookForm().addEventListener("submit", BookAdapter.newBook.bind(this))
-    this.deleteBookListener()
-    this.genreDelBttn().addEventListener("click", GenreAdapter.delete.bind(this))
-  }
-
-  div() {
-    return document.getElementById(this.id)
-  }
-
-  showFormBttn() {
-    return this.div().querySelector(`.show-form`)
-  }
-
-  bookFormDisplay() {    
-    this.formContainer().classList.toggle("no-display")
-  }
   
-  formContainer() {
-    return this.div().querySelector(".form-container-outer")
-  }
-
-  bookForm() {
-    return this.div().querySelector('form')
-  }
-
   bookDelBtns() {
-    return this.booksDiv().querySelectorAll("button")
+    return this.bookDiv().querySelectorAll("button")
   }
 
-  deleteBookListener() {
+  bookDelBtnListeners() {
     this.bookDelBtns().forEach(button => {
       button.addEventListener("click", BookAdapter.deleteBook)
     })
-  }
-
-  genreDelBttn() {
-    return this.div().querySelector(".footer button")
   }
 }

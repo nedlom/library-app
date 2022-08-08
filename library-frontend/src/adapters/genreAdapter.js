@@ -12,6 +12,8 @@ class GenreAdapter {
       })
       Genre.renderGenres()
     })
+    const genreForm = document.getElementById("genre-form")
+    genreForm.addEventListener("submit", GenreAdapter.newGenre)
   }
 
   static newGenre() {

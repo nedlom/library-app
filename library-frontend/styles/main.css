@@ -1,7 +1,16 @@
 body {
   /* background-color: rgb(238, 238, 238); */
   /* background-color: #9fa1a3; */
-  background-color: #FDF4DC;
+  /* background-color: #FDF4DC; */
+  background-color: #DCEFEF;
+}
+
+#container {
+  /* background-color: #9fa1a3; */
+}
+
+#genre-container {
+  /* background-color: #9fa1a3; */
 }
 
 #genre-form-container {
@@ -14,33 +23,54 @@ body {
   font-family: 'Lucida Grande', sans-serif;
   color: black;
   text-transform: uppercase;
+  /* text-decoration: underline; */
+
+}
+
+#no-genres {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: 3rem;
+  background-color: #DCEFEF;
+  font-weight: bold;
+  font-size: 25px;
+  font-family: 'Lucida Grande', sans-serif;
 }
 
 .genre-div {
+  /* text-align: center; */
   /* border-radius: 25px; */
   /* border: 1rem solid; */
   border: solid #365577;
-
+  margin: 35px;
+  background-color: #9fa1a3;
   /* border-color: #2E8B57; */
   /* padding: 1rem 1rem; */
-  margin: 25px;
+  /* margin: 35px; */
   /* background-color: white; */
-  background-color: black;
+  /* background-color: #9fa1a3;
+  background-color: black; */
+  box-shadow: 5px 10px black;
 }
 
 .header {
   display: flex;
   width: 100%;
+  /* margin: 1px;
+  border: solid #365577; */
+
 }
 .header-div {
   /* margin-left: 1px; */
   flex: 1;
   color: white;
   background-color: #365577;
+  border: solid #365577;
   font-size: large;
   font-weight: bold;
   font-family: 'Lucida Grande', sans-serif;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   /* border: 2px solid blue; */
 }
 
@@ -50,48 +80,118 @@ body {
   font-family: 'Lucida Grande', sans-serif;
 }
 
+.header-div button {
+  float: right;
+  /* background-color: black; */
+}
 .block {
   /* border: solid black; */
 }
 
-.form-container-outer {
+/* .form-container-outer {
   text-align: center;
   background-color: #365577;
-}
+} */
+
+/* .form-container-inner {
+  display: inline-block;
+  width: 40%; */
+  /* border:solid #9fa1a3; */
+  /* background-color: white; 
+  margin-bottom: 1.3rem;
+} */
+
+.form-container-outer {
+  text-align: center;
+  background-color: #9fa1a3;
+  /* border: solid #365577; */
+  /* border-bottom: #9fa1a3;
+  border-top: #9fa1a3; */
+} 
 
 .form-container-inner {
   display: inline-block;
   width: 40%;
   /* border:solid #9fa1a3; */
-  background-color: white; 
+  background-color: #9fa1a3;
+  /* background-color: 9fa1a3; 
+  border-bottom: #9fa1a3;
+  border-top: #9fa1a3; */
+  /* margin-bottom: 1.3rem; */
+}
+
+.add-book {
+  /* background-color: #9fa1a3; */
+  /* border: solid #365577; */
+  /* border-bottom: #9fa1a3; */
+  background-color: #9fa1a3;
+  text-align: center;
+  /* margin: 0; */
+  /* padding: 0; */
+} 
+
+.add-book-button {
+  background-color: #9fa1a3;
+  border: none;
+  font-size: smaller;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .book-field {
-  margin: 0.5rem;
+  margin: 0.2rem;
 }
 
 .books {
   background-color: #9fa1a3;
-  border: solid #365577;
+  /* background-color: #9fa1a3; */
+  /* border: solid #365577; */
+  /* border: solid yellow; */
+  /* border-top: #9fa1a3; */
+  /* border-top: #9fa1a3;
+  margin-top: 0%; */
+  /* border: #9fa1a3; */
+  /* margin: 0.5rem; */
+  /* border-top: none; */
 }
 
 .card {
   border-radius: 25px;
   /* border: 1px solid black; */
+
   margin: 1rem;
-  padding: 1rem 1rem;
+  padding: 1rem 1rem; 
   font-family: 'Lucida Grande', sans-serif;
   background-color: white;
-  overflow: hidden;
+  /* background-color: white; */
+
+  /* border-bottom: #9fa1a3; */
+  /* overflow: hidden; */
 }
+
+.card.add {
+  /* background-color: #9fa1a3; */
+  /* background-color: #9fa1a3; */
+  text-align: center;
+  /* margin: 0; */
+  /* padding: 0; */
+}
+
+/* .add-book {
+  background-color: #9fa1a3;
+  border: none;
+  font-size: smaller;
+  font-weight: bold;
+  text-decoration: underline;
+} */
 
 .bold {
   font-weight: bold;
 }
 
-.footer{
-  text-align: right;
-  background-color: #365577;
+/* .footer{ */
+  /* text-align: right; */
+  /* background-color: #365577; */
   /* border: 1px solid yellow; */
   /* margin: 1rem; */
 }

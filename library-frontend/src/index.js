@@ -1,2 +1,1 @@
 GenreAdapter.fetchGenres()
-Genre.getForm()
