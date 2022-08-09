@@ -5,7 +5,6 @@ class BookAdapter {
   static newBook() {
     event.preventDefault()
 
-
     const book = {
       title: this.bookForm().children[0].value,
       author: this.bookForm().children[2].value,
@@ -41,30 +40,60 @@ class BookAdapter {
   static deleteBook() {
     event.preventDefault()  
 
-    const id = this.dataset.id
+    const bookId = this.id.split("-")[1]
+    // debugger
+  
     
-    fetch(`${BookAdapter.url}/${id}`, {
+    fetch(`${BookAdapter.url}/${bookId}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json",
           'Accept': 'application/json'
         } 
     })
-    .then(() => {
-      const book = Book.findById(parseInt(id))
-      const genre = book.genre()
-      Book.delete(book)
-      BookAdapter.renderBooks(genre)
-      // genre.booksDiv().innerHTML = ""
-      // genre.bookCards()
-      // genre.bookListener()
+    .then(resp => {
+      if (resp.ok) {
+        const book = Book.findById(parseInt(bookId))
+        const genre = book.genre()
+        Book.delete(book)
+        BookAdapter.renderBooks(genre)
+      // // genre.booksDiv().innerHTML = ""
+      // // genre.bookCards()
+      // // genre.bookListener()
+      }
     })
   }  
 
-  static renderBooks(obj) {
+  static editBook(title, author, desc, id) {
+    
+    const book = {
+      title: title,
+      author: author,
+      description: desc,
+    }
 
+    debugger
+    
+    return fetch(`${BookAdapter.url}/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ book }),
+    }).then(res => res.json())
+    // .then(json => console.log(json))
+    // debugger
+    debugger
+
+  }
+
+  static renderBooks(obj) {
     obj.bookDiv().innerHTML = ""
     obj.bookCards()
     obj.bookDelBtnListeners()
+
+    obj.bookEditListeners()
+
+    // obj.bookEditBtnListeners()
   }
 }
