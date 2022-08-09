@@ -110,14 +110,23 @@ body {
 } 
 
 .form-container-inner {
+  text-align: center;
   display: inline-block;
-  width: 40%;
+  width: 50%;
   /* border:solid #9fa1a3; */
   background-color: #9fa1a3;
   /* background-color: 9fa1a3; 
   border-bottom: #9fa1a3;
   border-top: #9fa1a3; */
   /* margin-bottom: 1.3rem; */
+  /* overflow: auto; */
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  box-sizing: border-box;
 }
 
 .add-book {
@@ -136,6 +145,7 @@ body {
   font-size: smaller;
   font-weight: bold;
   text-decoration: underline;
+  /* cursor: pointer; */
 }
 
 .book-field {
@@ -187,19 +197,34 @@ body {
 
 .bold {
   font-weight: bold;
+  font-size: 1.5rem;
 }
+
+.author {}
+}
+
+
 
 /* .footer{ */
   /* text-align: right; */
   /* background-color: #365577; */
   /* border: 1px solid yellow; */
   /* margin: 1rem; */
-}
+/* } */
 
 button, input[type=submit] {
   cursor: pointer;
 }
 
+/* button {
+  cursor: pointer;
+} */
+
 .no-display {
   display: none;
+}
+
+.genre-div.empty{
+  text-align: center;
+  font-weight: bold;
 }
