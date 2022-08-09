@@ -48,7 +48,7 @@ class BookAdapter {
 
 
       // const genre = Genre.findById()
-      debugger
+      // debugger
       genre.toggleForm()
       // this.bookFormDisplay()
     })
@@ -57,7 +57,7 @@ class BookAdapter {
   static delete() {
     event.preventDefault()  
 
-    debugger
+    // debugger
 
     const id = this.id.split("-")[1]
     // debugger
@@ -82,8 +82,6 @@ class BookAdapter {
 
   static edit() {
     event.preventDefault()
-
-    debugger
     
     const book = {
       title: this.children[0].value,
@@ -91,8 +89,7 @@ class BookAdapter {
       description: this.children[4].value,
     }
 
-    debugger
-    const id = this.parentElement.id.split("-")[1]
+    const id = this.id.split("-")[2]
     
     fetch(`${BookAdapter.url}/${id}`, {
       method: 'PATCH',
@@ -112,6 +109,7 @@ class BookAdapter {
       book.description = json.description
       BookAdapter.renderBooks(book.genre())
     })
+    this.reset()
   }
 
   static renderBooks(obj) {

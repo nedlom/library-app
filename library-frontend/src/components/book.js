@@ -33,21 +33,48 @@ class Book {
         <button class='delete-book' id='book-${this.id}'>
           <i class='fa fa-trash'></i>
         </button>
+
         <button class='edit-book' id='edit-${this.id}'>
           Edit
         </button>
+
       </div>
-      <form class='edit-form no-display'>
-        <input class='book-field' value='${this.title}'><br>
-        <input class='book-field' value='${this.author}'><br>
-        <textarea class='book-field'>${this.description}</textarea><br>
-        <button type="submit" class='update-book'>update</button>
-      </form>
-      <button class='cancel'>Cancel</button>
+
+      <div class="form-div no-display">
+      <div class='cancel-'>
+        
+      </div>
+
+      <button class='cancel'>Go Back</button>
+        <form class='edit-form' id='edit-book-${this.id}'>
+          <input class='book-field' value='${this.title}'><br>
+          <input class='book-field' value='${this.author}'><br>
+          <textarea class='book-field'>${this.description}</textarea><br>
+          <button type="submit" class='update-book'>Update</button>
+        </form>
+
+      </div>
+      
     `
     card.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
+    card.querySelector(".edit-book").addEventListener("click", this.toggleEditForm)
+    card.querySelector("form").addEventListener("submit", BookAdapter.edit)
+    card.querySelector(".cancel").addEventListener("click", this.toggleEditForm)
     // debugger
     return card
+  }
+
+  toggleEditForm() { 
+    const parent = this.parentElement
+    parent.classList.toggle("no-display")
+
+    if (this.className === "edit-book") {
+      parent.nextElementSibling.classList.toggle("no-display")
+    } else {
+      parent.previousElementSibling.classList.toggle("no-display")
+      // debugger
+      parent.children[2].reset()
+    }
   }
 
   // bookCard() {

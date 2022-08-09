@@ -143,14 +143,14 @@ class Genre {
     // const bookDelBtns = this.div().querySelectorAll(".delete-book")
     // bookDelBtns.forEach(button => button.addEventListener("click", BookAdapter.delete))
 
-    const editBookBtns = this.bookDiv().querySelectorAll(".edit-book")
-    editBookBtns.forEach(button => button.addEventListener("click", this.toggleEditForm))
+    // const editBookBtns = this.bookDiv().querySelectorAll(".edit-book")
+    // editBookBtns.forEach(button => button.addEventListener("click", this.toggleEditForm))
 
-    const editBookForms = this.bookDiv().querySelectorAll(".edit-form")
-    editBookForms.forEach(form => form.addEventListener("submit", BookAdapter.edit))
+    // const editBookForms = this.bookDiv().querySelectorAll(".edit-form")
+    // editBookForms.forEach(form => form.addEventListener("submit", BookAdapter.edit))
 
-    const cancelEditBtns = this.bookDiv().querySelectorAll(".cancel") 
-    cancelEditBtns.forEach(button => button.addEventListener("click", this.toggle2))
+    // const cancelEditBtns = this.bookDiv().querySelectorAll(".cancel") 
+    // cancelEditBtns.forEach(button => button.addEventListener("click", this.toggle2))
   }
 
   toggleEditForm() {

@@ -120,6 +120,7 @@ body {
   border-top: #9fa1a3; */
   /* margin-bottom: 1.3rem; */
   /* overflow: auto; */
+
 }
 
 textarea {
@@ -227,4 +228,20 @@ button, input[type=submit] {
 .genre-div.empty{
   text-align: center;
   font-weight: bold;
+}
+
+.cancel- {
+  text-align: right;
+}
+
+.cancel {
+  border: none;
+  background-color: white;
+  color: blue;
+  cursor: pointer;
+  /* display: inline-block; */
+}
+
+button {
+  cursor: pointer;
 }
