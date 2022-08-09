@@ -8,8 +8,24 @@ class Genre {
     Genre.all.push(this)
   }
 
+  static findById(id) {
+    return Genre.all.find(genre => genre.id === id)
+  }
+
+  static deleteGenre(genre) {
+    Genre.all.splice(Genre.all.indexOf(genre), 1)
+  }
+
   static noGenres() {
-    return Genre.all.length === 0
+    if (Genre.all.length === 0) {
+      document.querySelector(".empty").classList.remove("no-display")
+    } else {
+      document.querySelector(".empty").classList.add("no-display")
+    }
+  }
+
+  static removeFromDom(genre) {
+    document.getElementById(genre.id).remove()
   }
   
   static renderGenres() {
@@ -32,7 +48,7 @@ class Genre {
       <div class='header'>
         <div class='header-div'>${this.name}</div>
         <div class='header-div'>
-          <button class='window-1'><i class="fa fa-window-close"></i></button>
+          <button class='window-1' id='genre-${this.id}'><i class="fa fa-window-close"></i></button>
           <button class='window-2'><i class="fa fa-window-maximize"></i></button>
           <button class='window-3'><i class="fa fa-window-minimize"></i></button>
         </div>
@@ -44,7 +60,7 @@ class Genre {
         </div>
         <div class='form-container-outer no-display'>
           <div class='form-container-inner'>
-            <form>
+            <form class='add-book'>
               <input class='book-field' placeholder='Title'><br>
               <input class='book-field' placeholder='Author'><br>
               <textarea class='book-field' placeholder='Description'></textarea><br>
@@ -88,7 +104,7 @@ class Genre {
     return this.addBookDiv().querySelector("button")
   }
   bookForm() {
-    return this.div().querySelector('form')
+    return this.div().querySelector('form.add-book')
   }
 
   // -------
@@ -106,10 +122,14 @@ class Genre {
   eventListeners() {
     this.minBtn().addEventListener("click", this.minimize.bind(this))
     this.maxBtn().addEventListener("click", this.maximize.bind(this))
-    this.closeBtn().addEventListener("click", GenreAdapter.delete.bind(this))
+    this.closeBtn().addEventListener("click", GenreAdapter.delete)
     this.addBookBtn().addEventListener("click", this.toggleForm.bind(this))
     this.bookForm().addEventListener("submit", BookAdapter.newBook.bind(this))
     this.bookDelBtnListeners()
+
+
+    this.bookEditBtnListeners()
+    this.bookUpdateBtnsListeners()
   }
   
   bookCards() {
@@ -137,7 +157,7 @@ class Genre {
   }
   
   bookDelBtns() {
-    return this.bookDiv().querySelectorAll("button")
+    return this.bookDiv().querySelectorAll(".delete-book")
   }
 
   bookDelBtnListeners() {
@@ -145,4 +165,73 @@ class Genre {
       button.addEventListener("click", BookAdapter.deleteBook)
     })
   }
+
+  bookEditBtns() {
+    return this.bookDiv().querySelectorAll(".edit-book")
+  }
+
+  bookEditBtnListeners() {
+    this.bookEditBtns().forEach(button => {
+      button.addEventListener("click", this.check)
+    })
+  }
+
+  bookUpdateBtns() {
+    return this.bookDiv().querySelectorAll(".update-book")
+  }
+
+  bookUpdateBtnsListeners() {
+    debugger
+  }
+
+  check() {
+    debugger
+    this.parentElement.classList.toggle("no-display")
+    this.parentElement.nextElementSibling.classList.toggle("no-display")
+    // const x = this.parentElement
+    // const title = x.querySelector(".title").innerHTML
+    // const author = x.querySelector(".author").innerHTML
+    // const desc = x.querySelector("p").innerHTML
+    
+    // x.innerHTML = ""
+    // x.innerHTML = ` `
+  }
+  
+  bookEditBtnListeners1() {
+    debugger
+  }
+
+
+  // --------------------------------------------------------
+
+
+  bookEditListeners() {
+    const x = this.bookDiv().querySelectorAll(".inner-card")
+    x.forEach(y => y.addEventListener("dblclick", this.tester))
+  }
+  
+  // testing() {
+  //   const x = this.div().querySelector(".inner-card")
+    // const y = x.querySelector(".title")
+  //   x.addEventListener("dblclick", this.tester)
+  // }
+
+  tester(e) {
+    // debugger
+    const target = e.target
+    target.contentEditable = true
+    target.focus()
+  }
+
+  bluring(e) {
+    const target = e.target
+    target.contentEditable = false
+    const title = e.target.parentElement.querySelector(".title").innerHTML
+    const author = e.target.parentElement.querySelector(".author").innerHTML
+    const desc = e.target.parentElement.querySelector("p").innerHTML
+    const id = e.target.parentElement.parentElement.querySelector("button").id.split("-")[1]
+    debugger
+   
+  }
+
 }

@@ -18,17 +18,30 @@ class Book {
   }
 
   bookCard() {
+
+    
     return `
       <div class='card'>
-        <div class='bold'>
-        ${this.title}
-        <br>
-        by ${this.author}
+        <div class='inner-card'>
+          <div class="bold title">${this.title}</div>
+          <div class="author">${this.author}</div>
+          <hr>
+          <p>${this.description}</p>
+        
+          <button class='delete-book' id='book-${this.id}'>
+            <i class='fa fa-trash'></i>
+          </button>
+          <button class='edit-book' id='edit-${this.id}'>
+            edit
+          </button>
         </div>
-        <p>${this.description}</p>
-        <button class='delete-book' data-id='${this.id}'>
-          <i class='fa fa-trash'></i>
-        </button>
+        <form class='no-display'>
+          <input class='book-field' value='${this.title}'><br>
+          <input class='book-field' value='${this.author}'><br>
+          <textarea class='book-field'>${this.desc}</textarea><br>
+          <button type="submit" class='update-book'>update</button>
+        </form>
+
       </div>
      `
   }
