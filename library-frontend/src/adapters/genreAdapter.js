@@ -4,7 +4,7 @@ class GenreAdapter {
 
   static fetchGenres() {
     fetch(this.url)
-    .then(res => res.json())
+    .then(resp => resp.json())
     .then(json => {
       json.forEach(obj => {
         const genre = new Genre(obj.id, obj.name)
@@ -32,7 +32,7 @@ class GenreAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      const genre = new Genre(json.id, json.name, json.books)
+      const genre = new Genre(json.id, json.name)
       Genre.noGenres()
       genre.renderGenre()
     })
@@ -60,17 +60,11 @@ class GenreAdapter {
           }
       })
       .then(() => {
-        // debugger
         const genre = Genre.findById(parseInt(genreId))
         Genre.removeFromDom(genre)
         Genre.deleteGenre(genre)
         Genre.noGenres()
-        // document.getElementById(this.id).remove()
       })
-      // Genre.deleteGenre(this)
-      // Genre.noGenres()
-      // document.getElementById(this.id).remove()
-
-    // }
+  
   }  
 }
