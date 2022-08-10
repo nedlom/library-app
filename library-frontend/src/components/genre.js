@@ -2,7 +2,7 @@ class Genre {
 
   static all = []
 
-  constructor(id, name, books) {
+  constructor(id, name) {
     this.id = id
     this.name = name
     Genre.all.push(this)

@@ -16,8 +16,7 @@ class Book {
       new Book(obj.id, obj.title, obj.author, obj.description, obj.genre_id)
     })
   }
-
-
+  
   bookCard() {
     const card = document.createElement("div")
     card.className = "card"
@@ -25,56 +24,53 @@ class Book {
 
     card.innerHTML = `
       <div class='inner-card'>
-        <div class="bold title">${this.title}</div>
-        <div class="author">by ${this.author}</div>
-        <hr>
-        <p>${this.description}</p>
-          
-        <button class='delete-book' id='book-${this.id}'>
-          <i class='fa fa-trash'></i>
-        </button>
+        <div class='book-info'>
+          <div class="bold title">${this.title}</div>
+          <div class="author">by ${this.author}</div>
+          <hr>
+          <p>${this.description}</p>
+        </div>
 
-        <button class='edit-book' id='edit-${this.id}'>
-          Edit
-        </button>
-
+        <div class='footer'>
+          <hr>
+          <button class='edit-book' id='edit-${this.id}'>Edit</button>
+          <div class='space'></div>
+          <button class='delete-book' id='book-${this.id}'>Delete</button>
+        </div>
       </div>
 
-      <div class="form-div no-display">
-      <div class='cancel-'>
-        
-      </div>
-
-      <button class='cancel'>Go Back</button>
+      <div class='inner-card no-display'>
         <form class='edit-form' id='edit-book-${this.id}'>
           <input class='book-field' value='${this.title}'><br>
           <input class='book-field' value='${this.author}'><br>
           <textarea class='book-field'>${this.description}</textarea><br>
           <button type="submit" class='update-book'>Update</button>
         </form>
-
+ 
+        <div class='footer'>
+          <hr>
+          <button class='cancel'>Go Back</button>
+        </div>
       </div>
-      
     `
     card.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
     card.querySelector(".edit-book").addEventListener("click", this.toggleEditForm)
     card.querySelector("form").addEventListener("submit", BookAdapter.edit)
     card.querySelector(".cancel").addEventListener("click", this.toggleEditForm)
-    // debugger
     return card
   }
 
-  toggleEditForm() { 
-    const parent = this.parentElement
-    parent.classList.toggle("no-display")
-
-    if (this.className === "edit-book") {
-      parent.nextElementSibling.classList.toggle("no-display")
+  toggleEditForm() {
+    const container = this.parentElement.parentElement
+    const nextSib  = container.nextElementSibling
+    const prevSib = container.previousElementSibling
+    if (nextSib) {
+      nextSib.classList.toggle("no-display")
     } else {
-      parent.previousElementSibling.classList.toggle("no-display")
-      // debugger
-      parent.children[2].reset()
+      prevSib.classList.toggle("no-display")
+      container.children[0].reset()
     }
+    container.classList.toggle("no-display")
   }
 
   // bookCard() {
