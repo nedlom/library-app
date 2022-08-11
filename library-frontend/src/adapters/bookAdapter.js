@@ -4,16 +4,6 @@ class BookAdapter {
 
   static newBook() {
     event.preventDefault()
-
-    // debugger
-
-    // const book = {
-    //   title: this.bookForm().children[0].value,
-    //   author: this.bookForm().children[2].value,
-    //   description: this.bookForm().children[4].value,
-    //   genre_id: this.id
-    // }
-
     const book = {
       title: this.children[0].value,
       author: this.children[2].value,
@@ -33,15 +23,22 @@ class BookAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      // debugger
-
+      
+      debugger
       const book = new Book(json.id, json.title, json.author, json.description, json.genre_id)
       const genre = Genre.findById(book.genre_id)
+      // const genreBooks = genre.bookCardsDiv()
+      // debugger
+      genre.test()
+      
+      genre.bookCardsDiv().append(book.bookCard())
+      
       // this.booksDiv().innerHTML = ""
       // this.bookCards()
       // this.bookListener()
       // debugger
-      BookAdapter.renderBooks(genre)
+      
+      // BookAdapter.renderBooks(genre)
       
       // this.bookForm().reset()
       this.reset()
@@ -62,7 +59,6 @@ class BookAdapter {
     const id = this.id.split("-")[1]
     // debugger
   
-    
     fetch(`${BookAdapter.url}/${id}`, {
       method: "DELETE",
       headers: {
@@ -72,12 +68,19 @@ class BookAdapter {
     })
     .then(resp => {
       if (resp.ok) {
+        // debugger
         const book = Book.findById(parseInt(id))
+        
         const genre = book.genre()
+        
         Book.delete(book)
-        BookAdapter.renderBooks(genre)
+        genre.test()
+        book.removeFromDom()
+        
+        // BookAdapter.renderBooks(genre)
       } 
-  })
+    })
+    
   }  
 
   static edit() {
@@ -114,9 +117,9 @@ class BookAdapter {
 
   static renderBooks(obj) {
     obj.bookDiv().innerHTML = ""
-    obj.bookCards()
+    obj.bookCards(obj.div())
 
-    obj.bookTest()
+    // obj.bookTest()
     // obj.bookDelBtnListeners()
 
     // obj.bookEditBtnListeners()

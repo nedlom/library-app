@@ -13,8 +13,8 @@ class GenreAdapter {
       Genre.noGenres()
       Genre.renderGenres()
     })
-    const genreForm = document.getElementById("genre-form")
-    genreForm.addEventListener("submit", GenreAdapter.newGenre)
+    // const genreForm = document.getElementById("genre-form")
+    // genreForm.addEventListener("submit", GenreAdapter.newGenre)
   }
 
   static newGenre() {
@@ -42,29 +42,34 @@ class GenreAdapter {
 
   static delete() {
     event.preventDefault()
-
-    // debugger
-    const genreId = this.id.split("-")[1]
     
-
+    const genreId = this.id.split("-")[1]
     // if ( confirm(`This will delete the entire` + 
     //   ` ${this.name} genre and all the books in` +
     //   ` it. Click OK if you want to proceed.`)
     //   ) {
 
+
       fetch(`${GenreAdapter.url}/${genreId}`, {
         method: "DELETE",
+        // ,
         headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json'
           }
       })
-      .then(() => {
-        const genre = Genre.findById(parseInt(genreId))
-        Genre.removeFromDom(genre)
-        Genre.deleteGenre(genre)
-        Genre.noGenres()
-      })
-  
+      .then(resp => resp.json())
+      .then(data => console.log(data))
+      // .then(() => {
+      //   debugger
+      //   const genre = Genre.findById(parseInt(genreId))
+      //   Genre.removeFromDom(genre)
+      //   Genre.deleteGenre(genre)
+      //   Genre.noGenres()
+      // })
+      const genre = Genre.findById(parseInt(genreId))
+      genre.removeFromDom()
+      Genre.delete(genre)
+      Genre.noGenres()
   }  
 }
