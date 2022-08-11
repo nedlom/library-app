@@ -44,11 +44,6 @@ class Genre {
     return Book.all.filter(book => book.genre_id === this.id)
   }
 
-  bookDiv() {
-    return this.div().querySelector(".books")
-  }
-
-
   renderGenre() {
     const genreContainer = document.getElementById("genre-container")
     const genreDiv = this.buildGenreDiv()
@@ -105,7 +100,7 @@ class Genre {
     return genreDiv
   }
 
-  test() {
+  toggleEmptyBookCard() {
     const emptyBookCard = this.div().querySelector(".empty")
     
     if (this.books().length !== 0) {
@@ -116,9 +111,6 @@ class Genre {
   }
 
   eventListeners(genreDiv) {
-
-  
-
     const minBtn = genreDiv.querySelector(".min")
     minBtn.addEventListener("click", this.minMax.bind(this))
 
@@ -135,24 +127,6 @@ class Genre {
     addBookForm.addEventListener("submit", BookAdapter.newBook)
   }
 
-  // eventListeners() {
-    
-  //   const minBtn = this.div().querySelector(".window-3")
-  //   minBtn.addEventListener("click", this.minimize.bind(this))
-
-  //   const maxBtn = this.div().querySelector(".window-2")
-  //   maxBtn.addEventListener("click", this.maximize.bind(this))
-
-  //   const closeBtn = this.div().querySelector(".window-1")
-  //   closeBtn.addEventListener("click", GenreAdapter.delete)
-
-  //   const addBookBtn = this.div().querySelector(".add-book-button")
-  //   addBookBtn.addEventListener("click", this.toggleForm.bind(this))
-
-  //   const addBookForm = this.div().querySelector("form.add-book")
-  //   addBookForm.addEventListener("submit", BookAdapter.newBook)
-  // }
-
   minMax() {
     const blocks = this.div().querySelectorAll(".block")
     blocks.forEach(block => {
@@ -161,34 +135,18 @@ class Genre {
       } else if (event.currentTarget.className === "max") {
         block.classList.remove("no-display")
       } 
-      // else {
-      //   GenreAdapter.delete.call(this)
-      // }
     })
   }
-
-  // minimize() {
-  //   debugger
-  //   this.blocks().forEach(block => block.classList.add("no-display"))
-  // }
-  // maximize() {
-  //   debugger
-  //   this.blocks().forEach(block => block.classList.remove("no-display"))
-  // }
 
   toggleForm() {
     const formCont = this.div().querySelector('.form-container-outer')
     formCont.classList.toggle("no-display")
   }
 
-  // bookCards() {
-  //   debugger
-  //   if (this.hasBooks()) {
-  //     this.books().forEach(book => this.bookDiv().append(book.bookCard()))
-  //   } else {
-  //     this.bookDiv().innerHTML = this.noBooks()
-  //   }
-  // }
+  bookDiv() {
+    return this.div().querySelector(".books")
+  }
+
   bookCardsDiv() {
     return this.div().querySelector(".books")
   }
@@ -196,40 +154,5 @@ class Genre {
   bookCards(genreDiv) {
     const bookCardsDiv = genreDiv.querySelector(".books")
     this.books().forEach(book => bookCardsDiv.append(book.bookCard()))
-    // if (this.books().length !== 0) {
-    //   this.books().forEach(book => bookCardsDiv.append(book.bookCard()))
-    // } else {
-    //   const emptyGenre = document.createElement("div")
-    //   emptyGenre.className = 'card empty'
-    //   emptyGenre.innerHTML = `${this.name} Genre Empty`
-    //   genreDiv.querySelector(".books").append(emptyGenre)
-    //   genreDiv.append = emptyGenre
-    // }
   }
-
-
-  empty() {
-
-
-
-
-    const bookCardsDiv = this.div().querySelector(".books")
-      if (this.books().length === 0){
-      const emptyGenre = document.createElement("div")
-      emptyGenre.className = 'card'
-      emptyGenre.innerHTML = `${this.name} Genre Empty`
-      bookCardsDiv.append(emptyGenre)
-      }
-  }
-  // hasBooks() {
-  //   return this.books().length !== 0
-  // }
-
-  
-
-  // noBooks() {
-  //   return `<div class='card'>${this.name} Genre Empty</di>`
-  // }
-
-  
 }

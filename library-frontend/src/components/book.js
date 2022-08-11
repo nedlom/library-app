@@ -16,10 +16,6 @@ class Book {
     Book.all.splice(Book.all.indexOf(book), 1)
   }
 
-  // static removeFromDom(book) {
-  //   document.getElementById(`b-${book.id}`).remove()
-  // }
-
   static findById(id) {
     return Book.all.find(book => book.id === id)
   }
@@ -40,108 +36,122 @@ class Book {
     this.domElement().remove()
   }
 
+  update(obj) {
+    this.title = obj.title
+    this.author = obj.author
+    this.description = obj.description
+    this.domElement().innerHTML = ""
+    this.domElement().append(this.innerCard())
+  }
+
   static initBooks(bookArray) {
     bookArray.forEach(obj => {
       new Book(obj.id, obj.title, obj.author, obj.description, obj.genre_id)
     })
   }
 
-  bookCard() {
-    const bookCard = document.createElement("div")
-    bookCard.className = "card"
-    bookCard.id = `b-${this.id}`
-
-    bookCard.innerHTML = `
-      <div class='inner-card'>
-        <div class='book-info'>
-          <div class="bold title">${this.title}</div>
-          <div class="author">by ${this.author}</div>
-          <hr>
-          <p>${this.description}</p>
-        </div>
-
-        <div class='footer'>
-          <hr>
-          <button class='edit-book' id='edit-${this.id}'>Edit</button>
-          <div class='space'></div>
-          <button class='delete-book' id='book-${this.id}'>Delete</button>
-        </div>
-      </div>
-
-      <div class='inner-card no-display'>
-        <form class='edit-form' id='edit-book-${this.id}'>
-          <input class='book-field' value='${this.title}'><br>
-          <input class='book-field' value='${this.author}'><br>
-          <textarea class='book-field'>${this.description}</textarea><br>
-          <button type="submit" class='update-book'>Update</button>
-        </form>
- 
-        <div class='footer'>
-          <hr>
-          <button class='cancel'>Go Back</button>
-        </div>
-      </div>
-    `
-    this.eventListeners(bookCard) 
-    return bookCard
-  }
-
-  eventListeners(bookCard) {
-    bookCard.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
-    bookCard.querySelector(".edit-book").addEventListener("click", this.toggleEditForm)
-    bookCard.querySelector("form").addEventListener("submit", BookAdapter.edit)
-    bookCard.querySelector(".cancel").addEventListener("click", this.toggleEditForm)
-  }
-
-  toggleEditForm() {
-    const container = this.parentElement.parentElement
-    const nextSib  = container.nextElementSibling
-    const prevSib = container.previousElementSibling
-    if (nextSib) {
-      nextSib.classList.toggle("no-display")
-    } else {
-      prevSib.classList.toggle("no-display")
-      container.children[0].reset()
-    }
-    container.classList.toggle("no-display")
-  }
-
   // bookCard() {
-    
-  //   return `
-  //     <div class='card' id='b-${this.id}'>
-  //       <div class='inner-card'>
+  //   const bookCard = document.createElement("div")
+  //   bookCard.className = "card"
+  //   bookCard.id = `b-${this.id}`
+
+  //   bookCard.innerHTML = `
+  //     <div class='inner-card'>
+  //       <div class='book-info'>
   //         <div class="bold title">${this.title}</div>
   //         <div class="author">by ${this.author}</div>
   //         <hr>
   //         <p>${this.description}</p>
-        
-  //         <button class='delete-book' id='book-${this.id}'>
-  //           <i class='fa fa-trash'></i>
-  //         </button>
-  //         <button class='edit-book' id='edit-${this.id}'>
-  //           Edit
-  //         </button>
   //       </div>
-  //       <form class='edit-form no-display'>
+
+  //       <div class='footer'>
+  //         <hr>
+  //         <button class='edit-book' id='edit-${this.id}'>Edit</button>
+  //         <div class='space'></div>
+  //         <button class='delete-book' id='book-${this.id}'>Delete</button>
+  //       </div>
+  //     </div>
+
+  //     <div class='inner-card no-display'>
+  //       <form class='edit-form' id='edit-book-${this.id}'>
   //         <input class='book-field' value='${this.title}'><br>
   //         <input class='book-field' value='${this.author}'><br>
   //         <textarea class='book-field'>${this.description}</textarea><br>
-  //         <button type="submit" class='update-book'>update</button>
+  //         <button type="submit" class='update-book'>Update</button>
   //       </form>
-  //       <button class='cancel'>Cancel</button>
+ 
+  //       <div class='footer'>
+  //         <hr>
+  //         <button class='cancel'>Go Back</button>
+  //       </div>
   //     </div>
-  //    `
+  //   `
+  //   this.eventListeners(bookCard) 
+  //   return bookCard
   // }
 
-  
-
-  update() {
-    const id = Book.all.indexOf(this)
-    Book.all[id] = this
+  bookCard() {
+    const bookCard = document.createElement("div")
+    bookCard.className = "card"
+    bookCard.id = `b-${this.id}`
+    bookCard.append(this.innerCard())
+    return(bookCard)
   }
 
-  
+  innerCard() {
+    const innerCard = document.createElement("div")
+    innerCard.className = "inner-card"
 
+    innerCard.innerHTML = `
+    <div class='inner-cards'>
+      <div class='book-info'>
+        <div class="bold title">${this.title}</div>
+        <div class="author">by ${this.author}</div>
+        <hr>
+        <p>${this.description}</p>
+      </div>
+
+      <div class='footer'>
+        <hr>
+        <button class='edit-book' id='edit-${this.id}'>Edit</button>
+        <div class='space'></div>
+        <button class='delete-book' id='book-${this.id}'>Delete</button>
+      </div>
+    </div>
+
+    <div class='inner-cards no-display'>
+      <form class='edit-form' id='edit-book-${this.id}'>
+        <input class='book-field' value='${this.title}'><br>
+        <input class='book-field' value='${this.author}'><br>
+        <textarea class='book-field'>${this.description}</textarea><br>
+        <button type="submit" class='update-book'>Update</button>
+      </form>
+
+      <div class='footer'>
+        <hr>
+        <button class='cancel'>Go Back</button>
+      </div>
+    </div>
+  `
   
+  this.eventListeners(innerCard) 
+  return innerCard
+  }
+
+  eventListeners(bookCard) {
+    bookCard.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
+    bookCard.querySelector(".edit-book").addEventListener("click", this.toggleEditForm.bind(this))
+    bookCard.querySelector("form").addEventListener("submit", BookAdapter.edit)
+    bookCard.querySelector(".cancel").addEventListener("click", this.toggleEditForm.bind(this))
+  }
+
+  toggleEditForm() {
+    const innerCards = this.domElement().children[0].querySelectorAll(".inner-cards")
+    innerCards[0].classList.toggle("no-display")
+    innerCards[1].classList.toggle("no-display")
+    
+    if (event && event.target.className === "cancel") {
+      innerCards[1].querySelector("form").reset()
+    }
+  }
 }

@@ -23,31 +23,13 @@ class BookAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      
-      debugger
       const book = new Book(json.id, json.title, json.author, json.description, json.genre_id)
       const genre = Genre.findById(book.genre_id)
-      // const genreBooks = genre.bookCardsDiv()
-      // debugger
-      genre.test()
-      
+      genre.toggleEmptyBookCard()
       genre.bookCardsDiv().append(book.bookCard())
-      
-      // this.booksDiv().innerHTML = ""
-      // this.bookCards()
-      // this.bookListener()
-      // debugger
-      
-      // BookAdapter.renderBooks(genre)
-      
-      // this.bookForm().reset()
       this.reset()
-
-
-      // const genre = Genre.findById()
-      // debugger
       genre.toggleForm()
-      // this.bookFormDisplay()
+    
     })
   }
 
@@ -68,16 +50,17 @@ class BookAdapter {
     })
     .then(resp => {
       if (resp.ok) {
-        // debugger
+   
         const book = Book.findById(parseInt(id))
         
         const genre = book.genre()
         
         Book.delete(book)
-        genre.test()
         book.removeFromDom()
+        genre.toggleEmptyBookCard()
         
-        // BookAdapter.renderBooks(genre)
+        
+      
       } 
     })
     
@@ -107,22 +90,7 @@ class BookAdapter {
     .then(resp => resp.json())
     .then(json => {
       const book = Book.findById(json.id)
-      book.title = json.title
-      book.author = json.author
-      book.description = json.description
-      BookAdapter.renderBooks(book.genre())
+      book.update(json)
     })
-    this.reset()
-  }
-
-  static renderBooks(obj) {
-    obj.bookDiv().innerHTML = ""
-    obj.bookCards(obj.div())
-
-    // obj.bookTest()
-    // obj.bookDelBtnListeners()
-
-    // obj.bookEditBtnListeners()
-    // obj.bookEdit()
   }
 }
