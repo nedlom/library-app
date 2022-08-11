@@ -11,18 +11,47 @@ class Book {
     Book.all.push(this)
   }
 
-  static initBooks(array) {
-    array.forEach(obj => {
+  static delete(book) {
+    // Book.all = Book.all.filter(b => b.id !== book.id )
+    Book.all.splice(Book.all.indexOf(book), 1)
+  }
+
+  // static removeFromDom(book) {
+  //   document.getElementById(`b-${book.id}`).remove()
+  // }
+
+  static findById(id) {
+    return Book.all.find(book => book.id === id)
+  }
+
+  static find(book) {
+    return Book.all.find(b => b === book)
+  }
+
+  genre() {
+    return Genre.all.find(genre => this.genre_id === genre.id)
+  }
+
+  domElement() {
+    return document.getElementById(`b-${this.id}`)
+  }
+
+  removeFromDom() {
+    this.domElement().remove()
+  }
+
+  static initBooks(bookArray) {
+    bookArray.forEach(obj => {
       new Book(obj.id, obj.title, obj.author, obj.description, obj.genre_id)
     })
   }
-  
-  bookCard() {
-    const card = document.createElement("div")
-    card.className = "card"
-    card.id = `b-${this.id}`
 
-    card.innerHTML = `
+  bookCard() {
+    const bookCard = document.createElement("div")
+    bookCard.className = "card"
+    bookCard.id = `b-${this.id}`
+
+    bookCard.innerHTML = `
       <div class='inner-card'>
         <div class='book-info'>
           <div class="bold title">${this.title}</div>
@@ -53,11 +82,15 @@ class Book {
         </div>
       </div>
     `
-    card.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
-    card.querySelector(".edit-book").addEventListener("click", this.toggleEditForm)
-    card.querySelector("form").addEventListener("submit", BookAdapter.edit)
-    card.querySelector(".cancel").addEventListener("click", this.toggleEditForm)
-    return card
+    this.eventListeners(bookCard) 
+    return bookCard
+  }
+
+  eventListeners(bookCard) {
+    bookCard.querySelector(".delete-book").addEventListener("click", BookAdapter.delete)
+    bookCard.querySelector(".edit-book").addEventListener("click", this.toggleEditForm)
+    bookCard.querySelector("form").addEventListener("submit", BookAdapter.edit)
+    bookCard.querySelector(".cancel").addEventListener("click", this.toggleEditForm)
   }
 
   toggleEditForm() {
@@ -101,21 +134,14 @@ class Book {
   //    `
   // }
 
-  static findById(id) {
-    return Book.all.find(book => book.id === id)
-  }
+  
 
   update() {
     const id = Book.all.indexOf(this)
     Book.all[id] = this
   }
 
-  genre() {
-    return Genre.all.find(genre => this.genre_id === genre.id)
-  }
+  
 
-  static delete(book) {
-    // Book.all = Book.all.filter(b => b.id !== book.id )
-    Book.all.splice(Book.all.indexOf(book), 1)
-  }
+  
 }

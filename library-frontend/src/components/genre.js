@@ -12,7 +12,11 @@ class Genre {
     return Genre.all.find(genre => genre.id === id)
   }
 
-  static deleteGenre(genre) {
+  static find(genre) {
+    return Book.all.find(g => g === genre)
+  }
+
+  static delete(genre) {
     Genre.all.splice(Genre.all.indexOf(genre), 1)
   }
 
@@ -23,34 +27,51 @@ class Genre {
       document.querySelector(".empty").classList.add("no-display")
     }
   }
-
-  static removeFromDom(genre) {
-    document.getElementById(genre.id).remove()
-  }
   
   static renderGenres() {
     this.all.forEach(genre => genre.renderGenre())
   }
 
+  div() {
+    return document.getElementById(this.id)
+  }
+
+  removeFromDom() {
+    this.div().remove()
+  }
+
+  books() {
+    return Book.all.filter(book => book.genre_id === this.id)
+  }
+
+  bookDiv() {
+    return this.div().querySelector(".books")
+  }
+
+
   renderGenre() {
     const genreContainer = document.getElementById("genre-container")
+    const genreDiv = this.buildGenreDiv()
+    
+    if (this.books().length !== 0) {
+      genreDiv.querySelector(".empty").classList.add("no-display")
+    }
+    
+    genreContainer.append(genreDiv)
+  }
+
+  buildGenreDiv() {
     const genreDiv = document.createElement("div")
     genreDiv.className = "genre-div"
     genreDiv.id = this.id
-    genreDiv.innerHTML = this.genreElements()
-    genreContainer.append(genreDiv)
-    this.bookCards()
-    this.eventListeners()
-  }
 
-  genreElements() {
-    return `
+    genreDiv.innerHTML = `
       <div class='header'>
         <div class='header-div'>${this.name}</div>
         <div class='header-div'>
-          <button class='window-1' id='del-${this.id}'><i class="fa fa-window-close"></i></button>
-          <button class='window-2'><i class="fa fa-window-maximize"></i></button>
-          <button class='window-3'><i class="fa fa-window-minimize"></i></button>
+          <button class='close' id='del-${this.id}'><i class="fa fa-window-close"></i></button>
+          <button class='max'><i class="fa fa-window-maximize"></i></button>
+          <button class='min'><i class="fa fa-window-minimize"></i></button>
         </div>
       </div>
 
@@ -60,7 +81,7 @@ class Genre {
         </div>
         <div class='form-container-outer no-display'>
           <div class='form-container-inner'>
-            <form class='add-book' id='form-genre-${this.id}'>
+            <form class='add-book-form' id='form-genre-${this.id}'>
               <input class='book-field' placeholder='Title'><br>
               <input class='book-field' placeholder='Author'><br>
               <textarea class='book-field' placeholder='Description'></textarea><br>
@@ -73,130 +94,142 @@ class Genre {
 
       <div class='block'>
         <div class='books'>
+          <div class='card empty'>
+            ${this.name} Genre Empty
+          </div>
         </div>
       </div>
     `
-  }
-
-  div() {
-    return document.getElementById(this.id)
-  }
-  
-  blocks() {
-    return this.div().querySelectorAll(".block")
-  }
-  formOuterContainer() {
-    return this.div().querySelector('.form-container-outer')
-  }
-
-  bookForm() {
-    return this.div().querySelector('form.add-book')
+    this.eventListeners(genreDiv)
+    this.bookCards(genreDiv)
+    return genreDiv
   }
 
   test() {
-
-    // const buttons = this.div().querySelector(".header").children[1].querySelectorAll("button")
-    // buttons.forEach(button => button.addEventListener("click", this.minMaxClose))
+    const emptyBookCard = this.div().querySelector(".empty")
     
+    if (this.books().length !== 0) {
+      emptyBookCard.classList.add("no-display")
+    } else {
+      emptyBookCard.classList.remove("no-display")
+    }
+  }
 
-    const minBtn = this.div().querySelector(".window-3")
-    minBtn.addEventListener("click", this.minimize.bind(this))
+  eventListeners(genreDiv) {
 
-    const maxBtn = this.div().querySelector(".window-2")
-    maxBtn.addEventListener("click", this.maximize.bind(this))
+  
 
-    const closeBtn = this.div().querySelector(".window-1")
+    const minBtn = genreDiv.querySelector(".min")
+    minBtn.addEventListener("click", this.minMax.bind(this))
+
+    const maxBtn = genreDiv.querySelector(".max")
+    maxBtn.addEventListener("click", this.minMax.bind(this))
+
+    const closeBtn = genreDiv.querySelector(".close")
     closeBtn.addEventListener("click", GenreAdapter.delete)
 
-    const addBookBtn = this.div().querySelector(".add-book-button")
+    const addBookBtn = genreDiv.querySelector(".add-book-button")
     addBookBtn.addEventListener("click", this.toggleForm.bind(this))
 
-    const addBookForm = this.div().querySelector("form.add-book")
+    const addBookForm = genreDiv.querySelector(".add-book-form")
     addBookForm.addEventListener("submit", BookAdapter.newBook)
-
-    this.bookTest()
   }
 
-  // minMaxClose() {
-  //   debugger
-  //   if (this.className === "window-3") {
+  // eventListeners() {
+    
+  //   const minBtn = this.div().querySelector(".window-3")
+  //   minBtn.addEventListener("click", this.minimize.bind(this))
 
-  //   } else if (this.class === "window-2") {
+  //   const maxBtn = this.div().querySelector(".window-2")
+  //   maxBtn.addEventListener("click", this.maximize.bind(this))
 
-  //   } else {
-      
-  //   }
+  //   const closeBtn = this.div().querySelector(".window-1")
+  //   closeBtn.addEventListener("click", GenreAdapter.delete)
+
+  //   const addBookBtn = this.div().querySelector(".add-book-button")
+  //   addBookBtn.addEventListener("click", this.toggleForm.bind(this))
+
+  //   const addBookForm = this.div().querySelector("form.add-book")
+  //   addBookForm.addEventListener("submit", BookAdapter.newBook)
   // }
 
-  minimize() {
-    this.blocks().forEach(block => block.classList.add("no-display"))
+  minMax() {
+    const blocks = this.div().querySelectorAll(".block")
+    blocks.forEach(block => {
+      if (event.currentTarget.className === "min") {
+        block.classList.add("no-display")
+      } else if (event.currentTarget.className === "max") {
+        block.classList.remove("no-display")
+      } 
+      // else {
+      //   GenreAdapter.delete.call(this)
+      // }
+    })
   }
-  maximize() {
-    this.blocks().forEach(block => block.classList.remove("no-display"))
-  }
+
+  // minimize() {
+  //   debugger
+  //   this.blocks().forEach(block => block.classList.add("no-display"))
+  // }
+  // maximize() {
+  //   debugger
+  //   this.blocks().forEach(block => block.classList.remove("no-display"))
+  // }
+
   toggleForm() {
-    this.formOuterContainer().classList.toggle("no-display")
+    const formCont = this.div().querySelector('.form-container-outer')
+    formCont.classList.toggle("no-display")
   }
 
-
-  bookTest() {
-    // const bookDelBtns = this.div().querySelectorAll(".delete-book")
-    // bookDelBtns.forEach(button => button.addEventListener("click", BookAdapter.delete))
-
-    // const editBookBtns = this.bookDiv().querySelectorAll(".edit-book")
-    // editBookBtns.forEach(button => button.addEventListener("click", this.toggleEditForm))
-
-    // const editBookForms = this.bookDiv().querySelectorAll(".edit-form")
-    // editBookForms.forEach(form => form.addEventListener("submit", BookAdapter.edit))
-
-    // const cancelEditBtns = this.bookDiv().querySelectorAll(".cancel") 
-    // cancelEditBtns.forEach(button => button.addEventListener("click", this.toggle2))
-  }
-
-  toggleEditForm() {
-    this.parentElement.classList.toggle("no-display")
-    this.parentElement.nextElementSibling.classList.toggle("no-display")
-  }
-
-  toggle2() {
-    const form = this.previousElementSibling
-    const innerCard = form.previousElementSibling
-    form.classList.toggle('no-display')
-    innerCard.classList.toggle("no-display")
-  }
-
-  
-  eventListeners() {
-    this.test()
-  }
-  
-  bookCards() {
-    if (this.hasBooks()) {
-      this.books().forEach(book => this.bookDiv().append(book.bookCard()))
-    } else {
-      this.bookDiv().innerHTML = this.noBooks()
-    }
-
-    // if (this.hasBooks()) {
-    //   this.books().forEach(book => this.bookDiv().innerHTML += book.bookCard())
-    // } else {
-    //   this.bookDiv().innerHTML = this.noBooks()
-    // }
-  }
-
-  hasBooks() {
-    return this.books().length !== 0
-  }
-
-  bookDiv() {
+  // bookCards() {
+  //   debugger
+  //   if (this.hasBooks()) {
+  //     this.books().forEach(book => this.bookDiv().append(book.bookCard()))
+  //   } else {
+  //     this.bookDiv().innerHTML = this.noBooks()
+  //   }
+  // }
+  bookCardsDiv() {
     return this.div().querySelector(".books")
   }
 
-  noBooks() {
-    return `<div class='card'>${this.name} Genre Empty</di>`
+  bookCards(genreDiv) {
+    const bookCardsDiv = genreDiv.querySelector(".books")
+    this.books().forEach(book => bookCardsDiv.append(book.bookCard()))
+    // if (this.books().length !== 0) {
+    //   this.books().forEach(book => bookCardsDiv.append(book.bookCard()))
+    // } else {
+    //   const emptyGenre = document.createElement("div")
+    //   emptyGenre.className = 'card empty'
+    //   emptyGenre.innerHTML = `${this.name} Genre Empty`
+    //   genreDiv.querySelector(".books").append(emptyGenre)
+    //   genreDiv.append = emptyGenre
+    // }
   }
 
-  books() {
-    return Book.all.filter(book => book.genre_id === this.id)
+
+  empty() {
+
+
+
+
+    const bookCardsDiv = this.div().querySelector(".books")
+      if (this.books().length === 0){
+      const emptyGenre = document.createElement("div")
+      emptyGenre.className = 'card'
+      emptyGenre.innerHTML = `${this.name} Genre Empty`
+      bookCardsDiv.append(emptyGenre)
+      }
   }
+  // hasBooks() {
+  //   return this.books().length !== 0
+  // }
+
+  
+
+  // noBooks() {
+  //   return `<div class='card'>${this.name} Genre Empty</di>`
+  // }
+
+  
 }
