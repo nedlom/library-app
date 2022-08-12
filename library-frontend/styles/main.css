@@ -3,21 +3,12 @@ body {
 }
 
 #container {
-  /* background-color: #9fa1a3; */
-  /* text-align: center; */
   position:static;
-  /* left: 10%;
-  right: 10%; */
   border: solid black;
-  /* padding: 3rem; */
-  /* padding-bottom: 5rem; */
-  /* margin-top: 2rem;
-  margin-bottom: 10%; */
   background-color: #DCEFEF;
   box-shadow: 10px 10px 5px 12px grey;
-  margin: 2% 12% 4% 12%;
+  margin: 4% 15% 4% 15%;
 }
-
 
 #genre-form-container {
   text-align: center;
@@ -27,34 +18,22 @@ body {
   border-style: solid;
   border-width: thin;
   border-color: #365577;
-  /* margin: 0%; */
   padding: 0.2%;
 }
 
 #submit {
-  /* border: none; */
-  /* background-color: #365577; */
-  /* color: white; */
-  /* margin: 0%; */
-  /* padding: 0%; */
 }
 
 #genre-container {
-  /* background-color: #9fa1a3; */
-  /* position: relative; */
-  /* width: 75%; */
-  
 }
 
 #page-title {
   text-align: center;
-  font-size: 50px;
+  font-size: 5rem;
   font-family: 'Lucida Grande', sans-serif;
   color: black;
   text-transform: uppercase;
   margin-bottom: 3%;
-  /* text-decoration: underline; */
-
 }
 
 #no-genres {
@@ -69,23 +48,10 @@ body {
 }
 
 .genre {
-  /* text-align: center; */
-  /* border-radius: 25px; */
-  /* border: 1rem solid; */
   border: solid #365577;
-  margin: 4% 10% 10% 10%;
+  margin: 4% 13% 10% 13%;
   background-color: #9fa1a3;
-  /* border-color: #2E8B57; */
-  /* padding: 1rem 1rem; */
-  /* margin: 35px; */
-  /* background-color: white; */
-  /* background-color: #9fa1a3;
-  background-color: black; */
-   /* position: absolute; */
-
-
   box-shadow: 10px 10px 5px black;
- 
 }
 
 .field {
@@ -98,19 +64,15 @@ body {
   padding-left: 1%;
   padding-right: 2%;
   padding-bottom: 1%;
-  /* border: solid black; */
   background-color: white;
 }
 
 .header {
   display: flex;
   width: 100%;
-  /* margin: 1px;
-  border: solid #365577; */
-
 }
+
 .header-div {
-  /* margin-left: 1px; */
   flex: 1;
   color: white;
   background-color: #365577;
@@ -118,25 +80,19 @@ body {
   font-size: large;
   font-weight: bold;
   font-family: 'Lucida Grande', sans-serif;
-  /* text-decoration: underline; */
-  /* border: 2px solid blue; */
 }
 
 .header-div:nth-child(2) {
-  /* flex: 1; */
   text-align: right;
   font-family: 'Lucida Grande', sans-serif;
 }
 
 .header-div button {
   float: right;
-  /* background-color: black; */
 }
+
 .block {
-  /* border: solid black; */
 }
-
-
 
 .form-container-outer {
   text-align: center;
@@ -149,11 +105,8 @@ body {
   border-style: solid;
   border-width: thin;
   border-color: #365577;
-  /* text-align: center; */
   display: inline-block;
-  /* padding-left: 100%;
-  padding-right 25%; */
-  width: 75%;
+  width: 70%;
   background-color: white;
   padding: 2% 5% 2% 5%;
 }
@@ -177,25 +130,14 @@ textarea {
   font-size: smaller;
   font-weight: bold;
   text-decoration: underline;
-  /* cursor: pointer; */
 }
 
 .field {
   margin: 0.2rem;
-  /* width: 50%; */
 }
 
 .books {
   background-color: #9fa1a3;
-  /* background-color: #9fa1a3; */
-  /* border: solid #365577; */
-  /* border: solid yellow; */
-  /* border-top: #9fa1a3; */
-  /* border-top: #9fa1a3;
-  margin-top: 0%; */
-  /* border: #9fa1a3; */
-  /* margin: 0.5rem; */
-  /* border-top: none; */
 }
 
 .card {
@@ -203,24 +145,14 @@ textarea {
   border-style: solid;
   border-width: thin;
   border-color: #365577;
-  /* border: 1px solid black; */
-
   margin: 1rem;
   padding: 1rem 1rem; 
   font-family: 'Lucida Grande', sans-serif;
   background-color: white;
-  /* background-color: white; */
-
-  /* border-bottom: #9fa1a3; */
-  /* overflow: hidden; */
 }
 
 .card.add {
-  /* background-color: #9fa1a3; */
-  /* background-color: #9fa1a3; */
   text-align: center;
-  /* margin: 0; */
-  /* padding: 0; */
 }
 
 .card.empty {
@@ -230,17 +162,8 @@ textarea {
   border-color: #365577;
 }
 
-/* .add-book {
-  background-color: #9fa1a3;
-  border: none;
-  font-size: smaller;
-  font-weight: bold;
-  text-decoration: underline;
-} */
-
 .bold {
   font-weight: bold;
-  /* font-size: 1.5rem; */
   font-size: 22pt;
 }
 
@@ -257,10 +180,6 @@ button, input[type=submit] {
   margin: 0.2rem;
 }
 
-/* button {
-  cursor: pointer;
-} */
-
 .no-display {
   display: none;
 }
@@ -268,17 +187,13 @@ button, input[type=submit] {
 .empty-genre{
   text-align: center;
   font-weight: bold;
-  margin-bottom: 40%;
 }
-
-
 
 .back {
   border: none;
   background-color: white;
   color: blue;
   cursor: pointer;
-  /* display: inline-block; */
 }
 
 button {
