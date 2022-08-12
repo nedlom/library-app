@@ -7,7 +7,7 @@ class GenreAdapter {
     .then(resp => resp.json())
     .then(json => {
       json.forEach(obj => {
-        const genre = new Genre(obj.id, obj.name)
+        const genre = new Genre(obj)
         Book.initBooks(obj.books)
       })
       Genre.noGenresDiv()
@@ -29,8 +29,15 @@ class GenreAdapter {
       })
     })
     .then(resp => resp.json())
+    // .then(resp => {
+    //   if (resp === 201 ) { degugger }
+    //   else {
+    //     debugger
+    //     throw new Error(resp.statusText)}})
+    //   .catch(err => console.log(err))
     .then(json => {
-      const genre = new Genre(json.id, json.name)
+      // console.log(json.id)
+      const genre = new Genre(json)
       Genre.noGenresDiv()
       genre.renderGenre()
     })
@@ -47,6 +54,7 @@ class GenreAdapter {
         }
       })
       .then(resp => {
+        debugger
         if (resp.ok) {
           Genre.delete(this)
           Genre.noGenresDiv()

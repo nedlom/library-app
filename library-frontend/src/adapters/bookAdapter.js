@@ -25,7 +25,7 @@ class BookAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      const book = new Book(json.id, json.title, json.author, json.description, json.genre_id)
+      const book = new Book(json)
       this.toggleEmptyBookCard()
       this.toggleForm()
       book.addDom()    

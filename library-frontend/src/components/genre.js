@@ -2,9 +2,9 @@ class Genre {
 
   static all = []
 
-  constructor(id, name) {
-    this.id = id
-    this.name = name
+  constructor(obj) {
+    this.id = obj.id
+    this.name = obj.name
     Genre.all.push(this)
   }
 

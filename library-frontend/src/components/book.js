@@ -2,12 +2,12 @@ class Book {
   
   static all = []
 
-  constructor(id, title, author, description, genre_id) {
-    this.id = id 
-    this.title = title
-    this.author = author
-    this.description = description
-    this.genre_id = genre_id
+  constructor(obj) {
+    this.id = obj.id 
+    this.title = obj.title
+    this.author = obj.author
+    this.description = obj.description
+    this.genre_id = obj.genre_id
     Book.all.push(this)
   }
 
@@ -53,7 +53,8 @@ class Book {
 
   static initBooks(bookArray) {
     bookArray.forEach(obj => {
-      new Book(obj.id, obj.title, obj.author, obj.description, obj.genre_id)
+      // debugger
+      new Book(obj)
     })
   }
 
