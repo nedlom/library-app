@@ -4,11 +4,13 @@ class BookAdapter {
 
   static newBook() {
     event.preventDefault()
+
+    const inputs = event.target.querySelectorAll(".field")
     const book = {
-      title: this.children[0].value,
-      author: this.children[2].value,
-      description: this.children[4].value,
-      genre_id: this.id.split("-")[2]
+      title: inputs[0].value,
+      author: inputs[1].value,
+      description: inputs[2].value, 
+      genre_id: this.id
     }
     
     fetch(BookAdapter.url, {
@@ -24,24 +26,16 @@ class BookAdapter {
     .then(resp => resp.json())
     .then(json => {
       const book = new Book(json.id, json.title, json.author, json.description, json.genre_id)
-      const genre = Genre.findById(book.genre_id)
-      genre.toggleEmptyBookCard()
-      genre.bookCardsDiv().append(book.bookCard())
-      this.reset()
-      genre.toggleForm()
-    
+      this.toggleEmptyBookCard()
+      this.toggleForm()
+      book.addDom()    
     })
   }
 
   static delete() {
     event.preventDefault()  
-
-    // debugger
-
-    const id = this.id.split("-")[1]
-    // debugger
   
-    fetch(`${BookAdapter.url}/${id}`, {
+    fetch(`${BookAdapter.url}/${this.id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json",
@@ -50,34 +44,23 @@ class BookAdapter {
     })
     .then(resp => {
       if (resp.ok) {
-   
-        const book = Book.findById(parseInt(id))
-        
-        const genre = book.genre()
-        
-        Book.delete(book)
-        book.removeFromDom()
-        genre.toggleEmptyBookCard()
-        
-        
-      
+        Book.delete(this)
+        this.genre().toggleEmptyBookCard()
       } 
     })
-    
   }  
 
   static edit() {
     event.preventDefault()
-    
+  
+    const inputs = event.target.querySelectorAll(".field")
     const book = {
-      title: this.children[0].value,
-      author: this.children[2].value,
-      description: this.children[4].value,
+      title: inputs[0].value,
+      author: inputs[1].value,
+      description: inputs[2].value, 
     }
-
-    const id = this.id.split("-")[2]
     
-    fetch(`${BookAdapter.url}/${id}`, {
+    fetch(`${BookAdapter.url}/${this.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -89,8 +72,7 @@ class BookAdapter {
     })
     .then(resp => resp.json())
     .then(json => {
-      const book = Book.findById(json.id)
-      book.update(json)
+      this.update(json)
     })
   }
 }
