@@ -54,13 +54,13 @@ class Genre {
       <div class='header'>
         <div class='header-div'>${this.name}</div>
         <div class='header-div'>
-          <button class='close'><i class="fa fa-window-close"></i></button>
-          <button class='max'><i class="fa fa-window-maximize"></i></button>
-          <button class='min'><i class="fa fa-window-minimize"></i></button>
+          <button class='close'><i class="fa fa-trash"></i></button>
+          <button class='down'><i class="fa fa-caret-down"></i></button>
+          <button class='up no-display'><i class="fa fa-caret-up"></i></button>
         </div>
       </div>
 
-      <div class='block'>
+      <div class='block no-display'>
         <div class='add-book'>
           <button class='add-book-button'>Add Book To ${this.name}</button>
         </div>
@@ -77,7 +77,7 @@ class Genre {
         </div>
       </div>
 
-      <div class='block'>
+      <div class='block no-display'>
         <div class='books'>
           <div class='card empty'>
             ${this.name} Genre Empty
@@ -100,11 +100,11 @@ class Genre {
   }
 
   eventListeners(genreDiv) {
-    const minBtn = genreDiv.querySelector(".min")
-    minBtn.addEventListener("click", this.minimize.bind(this))
+    const upCaret = genreDiv.querySelector(".up")
+    upCaret.addEventListener("click", this.caretUpDown.bind(this))
 
-    const maxBtn = genreDiv.querySelector(".max")
-    maxBtn.addEventListener("click", this.maximize.bind(this))
+    const downCaret = genreDiv.querySelector(".down")
+    downCaret.addEventListener("click", this.caretUpDown.bind(this))
 
     const closeBtn = genreDiv.querySelector(".close")
     closeBtn.addEventListener("click", GenreAdapter.delete.bind(this))
@@ -116,17 +116,34 @@ class Genre {
     addBookForm.addEventListener("submit", BookAdapter.newBook.bind(this))
   }
 
-  minimize() {
+  caretUpDown() {
+    const caret = event.currentTarget
+    caret.classList.toggle("no-display")
+    if (caret.classList.contains("up")) {
+      this.div().querySelector(".down").classList.toggle("no-display")
+    } else {
+      this.div().querySelector(".up").classList.toggle("no-display")
+    }
     this.div().querySelectorAll(".block").forEach(block => {
-      block.classList.add("no-display")
+      block.classList.toggle("no-display")
     })
   }
 
-  maximize() {
-    this.div().querySelectorAll(".block").forEach(block => {
-      block.classList.remove("no-display")
-    })
-  }
+  // minimize() {
+  //   event.currentTarget.classList.add("no-display")
+  //   this.div().querySelector(".max").classList.remove("no-display")
+  //   this.div().querySelectorAll(".block").forEach(block => {
+  //     block.classList.add("no-display")
+  //   })
+  // }
+
+  // maximize() {
+  //   event.currentTarget.classList.add("no-display")
+  //   this.div().querySelector(".min").classList.remove("no-display")
+  //   this.div().querySelectorAll(".block").forEach(block => {
+  //     block.classList.remove("no-display")
+  //   })
+  // }
 
   toggleForm() {
     const formCont = this.div().querySelector('.form-container-outer')
