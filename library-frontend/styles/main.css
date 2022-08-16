@@ -5,13 +5,19 @@ body {
 #container {
   position:static;
   border: solid black;
-  background-color: #DCEFEF;
+  padding-bottom: 5%;
+  background-color: #B9DADA;
   box-shadow: 10px 10px 5px 12px grey;
-  margin: 4% 15% 4% 15%;
+  margin: 2% 7% 2% 7%;
+}
+
+.max {
+  font-weight: bold;
 }
 
 #genre-form-container {
   text-align: center;
+  margin-bottom: 1%;
 }
 
 #genre-name {
@@ -24,8 +30,12 @@ body {
 #submit {
 }
 
-#genre-container {
-}
+/* #genre-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px; 
+} */
+
 
 #page-title {
   text-align: center;
@@ -33,7 +43,9 @@ body {
   font-family: 'Lucida Grande', sans-serif;
   color: black;
   text-transform: uppercase;
-  margin-bottom: 3%;
+  margin-bottom: 1%;
+  margin-top: 2%;
+  /* text-shadow: 3px 3px #365577; */
 }
 
 #no-genres {
@@ -49,7 +61,7 @@ body {
 
 .genre {
   border: solid #365577;
-  margin: 4% 13% 10% 13%;
+  margin: 2% 10% 1% 10%;
   background-color: #9fa1a3;
   box-shadow: 10px 10px 5px black;
 }
@@ -70,6 +82,7 @@ body {
 .header {
   display: flex;
   width: 100%;
+  background-color: #365577;
 }
 
 .header-div {
@@ -82,9 +95,15 @@ body {
   font-family: 'Lucida Grande', sans-serif;
 }
 
+.header-div:nth-child(1) {
+  padding-top: 0.5%;
+}
+
+
 .header-div:nth-child(2) {
   text-align: right;
   font-family: 'Lucida Grande', sans-serif;
+  padding-top: none;
 }
 
 .header-div button {
@@ -116,6 +135,7 @@ textarea {
   height: 150px;
   resize: none;
   box-sizing: border-box;
+  white-space: pre-line;
 }
 
 .add-book {
@@ -137,6 +157,10 @@ textarea {
 }
 
 .books {
+  /* display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;  */
+
   background-color: #9fa1a3;
 }
 
@@ -173,6 +197,7 @@ textarea {
 
 p {
   font-size: 1rem;
+  white-space: pre-line;
 }
 
 button, input[type=submit] {
