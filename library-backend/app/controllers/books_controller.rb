@@ -24,7 +24,6 @@ class BooksController < ApplicationController
     end
   end
 
- 
   def destroy
     book = Book.find(params[:id])
     book.destroy
@@ -34,5 +33,5 @@ class BooksController < ApplicationController
     def book_params
       params.require(:book).permit(:title, :author, :description, :genre_id)
     end
-    
+
 end
