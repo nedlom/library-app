@@ -11,68 +11,50 @@ class Book {
     Book.all.push(this)
   }
 
-  static delete(book) {
-    // Book.all = Book.all.filter(b => b.id !== book.id )
-    Book.all.splice(Book.all.indexOf(book), 1)
-    book.domElement().remove()
+  static initBooks(bookArray) {
+    bookArray.forEach(obj => new Book(obj))
   }
 
-  // static findById(id) {
-  //   return Book.all.find(book => book.id === id)
-  // }
+  static delete(book) {
+    Book.all.splice(Book.all.indexOf(book), 1)
+    book.bookCard().remove()
+  }
 
-  addDom() {
-    const genreDiv = this.genre().bookCardsDiv()
-    const bookCard = this.bookCard()
-    genreDiv.append(bookCard)
-
-    // debugger
+  render() {
+    const genreBooks = this.genre().div().querySelector(".books")
+    genreBooks.append(this.buildBookCard())
   }
  
   genre() {
     return Genre.all.find(genre => this.genre_id === genre.id)
   }
 
-  // change to bookCard
-  domElement() {
+  bookCard() {
     return document.querySelector(`[data-id="${this.id}"]`)
-    // return document.getElementById(`b-${this.id}`)
   }
-
-  // removeFromDom() {
-  //   this.domElement().remove()
-  // }
 
   update(obj) {
     this.title = obj.title
     this.author = obj.author
     this.description = obj.description
-    this.domElement().innerHTML = ""
-    this.domElement().append(this.innerCard())
+    this.bookCard().innerHTML = ""
+    this.bookCard().append(this.editableSection())
   }
 
-  static initBooks(bookArray) {
-    bookArray.forEach(obj => {
-      // debugger
-      new Book(obj)
-    })
-  }
-
-  bookCard() {
+  buildBookCard() {
     const bookCard = document.createElement("div")
     bookCard.className = "card"
-    // bookCard.id = `b-${this.id}`
     bookCard.dataset.id = this.id
-    bookCard.append(this.innerCard())
-    return(bookCard)
+    bookCard.append(this.editableSection())
+    return bookCard
   }
 
-  innerCard() {
-    const innerCard = document.createElement("div")
-    innerCard.className = "inner-card"
-
-    innerCard.innerHTML = `
-    <div class='inner-cards'>
+  editableSection() {
+    const editable = document.createElement("div")
+    editable.className = "editable"
+  
+    editable.innerHTML = `
+    <div class='inner-card'>
       <div class='book-info'>
         <div class="bold title">${this.title}</div>
         <div class="author">by ${this.author}</div>
@@ -88,7 +70,7 @@ class Book {
       </div>
     </div>
 
-    <div class='inner-cards no-display'>
+    <div class='inner-card no-display'>
       <form class='edit-form'>
         <input class='field' value='${this.title}'><br>
         <input class='field' value='${this.author}'><br>
@@ -102,26 +84,29 @@ class Book {
       </div>
     </div>
   `
-  
-  this.eventListeners(innerCard) 
-  return innerCard
+  this.eventListeners(editable) 
+  return editable
   }
 
   eventListeners(bookCard) {
-   
-    bookCard.querySelector(".delete").addEventListener("click", BookAdapter.delete.bind(this))
-    bookCard.querySelector(".edit").addEventListener("click", this.toggleEditForm.bind(this))
-    bookCard.querySelector("form").addEventListener("submit", BookAdapter.edit.bind(this))
-    bookCard.querySelector(".back").addEventListener("click", this.toggleEditForm.bind(this))
+    const delBtn = bookCard.querySelector(".delete")
+    delBtn.addEventListener("click", BookAdapter.delete.bind(this))
+
+    const editBtn = bookCard.querySelector(".edit")
+    editBtn.addEventListener("click", this.toggleEditForm.bind(this))
+
+    const form = bookCard.querySelector("form")
+    form.addEventListener("submit", BookAdapter.edit.bind(this))
+
+    const backBtn = bookCard.querySelector(".back")
+    backBtn.addEventListener("click", this.toggleEditForm.bind(this))
   }
 
   toggleEditForm() {
-    const innerCards = this.domElement().children[0].querySelectorAll(".inner-cards")
-    innerCards[0].classList.toggle("no-display")
-    innerCards[1].classList.toggle("no-display")
-    
-    if (event && event.target.className === "back") {
+    const innerCards = this.bookCard().querySelectorAll(".inner-card")
+    if (event.target.className === "back") {
       innerCards[1].querySelector("form").reset()
     }
+    innerCards.forEach(innerCard => innerCard.classList.toggle("no-display"))
   }
 }
