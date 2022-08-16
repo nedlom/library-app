@@ -8,44 +8,42 @@ class Genre {
     Genre.all.push(this)
   }
 
-  // static findById(id) {
-  //   return Genre.all.find(genre => genre.id === id)
-  // }
-
-  static delete(genre) {
-    Genre.all.splice(Genre.all.indexOf(genre), 1)
-    genre.books().forEach(book => Book.delete(book))
-    genre.div().remove()
+  static newGenreListener() {
+    const genreForm = document.getElementById("genre-form")
+    genreForm.addEventListener("submit", GenreAdapter.newGenre)
   }
 
-  static noGenresDiv() {
+  static toggleNoGenresDiv() {
     if (Genre.all.length === 0) {
       document.querySelector(".empty-genre").classList.remove("no-display")
     } else {
       document.querySelector(".empty-genre").classList.add("no-display")
     }
   }
+
+  static delete(genre) {
+    Genre.all.splice(Genre.all.indexOf(genre), 1)
+    genre.books().forEach(book => Book.delete(book))
+    genre.div().remove()
+  }
   
   static renderGenres() {
-    this.all.forEach(genre => genre.renderGenre())
+    this.all.forEach(genre => genre.render())
   }
 
-  // removeFromDom() {
-  //   this.div().remove()
-  // }
-
-  renderGenre() {
+  render() {
     const genreContainer = document.getElementById("genre-container")
-    const genreDiv = this.buildGenreDiv()
+    const genreDiv = this.buildGenre()
     
     if (this.books().length !== 0) {
       genreDiv.querySelector(".empty").classList.add("no-display")
     }
     
     genreContainer.append(genreDiv)
+    this.books().forEach(book => book.render())
   }
 
-  buildGenreDiv() {
+  buildGenre() {
     const genreDiv = document.createElement("div")
     genreDiv.className = "genre"
     genreDiv.id = this.id
@@ -55,8 +53,7 @@ class Genre {
         <div class='header-div'>${this.name}</div>
         <div class='header-div'>
           <button class='close'><i class="fa fa-trash"></i></button>
-          <button class='down'><i class="fa fa-caret-down"></i></button>
-          <button class='up no-display'><i class="fa fa-caret-up"></i></button>
+          <button class='caret'><i class="fa fa-caret-down"></i></button>
         </div>
       </div>
 
@@ -86,7 +83,6 @@ class Genre {
       </div>
     `
     this.eventListeners(genreDiv)
-    this.bookCards(genreDiv)
     return genreDiv
   }
 
@@ -100,11 +96,8 @@ class Genre {
   }
 
   eventListeners(genreDiv) {
-    const upCaret = genreDiv.querySelector(".up")
+    const upCaret = genreDiv.querySelector(".caret")
     upCaret.addEventListener("click", this.caretUpDown.bind(this))
-
-    const downCaret = genreDiv.querySelector(".down")
-    downCaret.addEventListener("click", this.caretUpDown.bind(this))
 
     const closeBtn = genreDiv.querySelector(".close")
     closeBtn.addEventListener("click", GenreAdapter.delete.bind(this))
@@ -117,33 +110,20 @@ class Genre {
   }
 
   caretUpDown() {
-    const caret = event.currentTarget
-    caret.classList.toggle("no-display")
-    if (caret.classList.contains("up")) {
-      this.div().querySelector(".down").classList.toggle("no-display")
+    const down =`<i class="fa fa-caret-down"></i>`
+    const up = `<i class="fa fa-caret-up"></i>`
+    const target = event.currentTarget
+
+    if (target.innerHTML === down) {
+      target.innerHTML = up
     } else {
-      this.div().querySelector(".up").classList.toggle("no-display")
+      target.innerHTML = down
     }
+
     this.div().querySelectorAll(".block").forEach(block => {
       block.classList.toggle("no-display")
     })
   }
-
-  // minimize() {
-  //   event.currentTarget.classList.add("no-display")
-  //   this.div().querySelector(".max").classList.remove("no-display")
-  //   this.div().querySelectorAll(".block").forEach(block => {
-  //     block.classList.add("no-display")
-  //   })
-  // }
-
-  // maximize() {
-  //   event.currentTarget.classList.add("no-display")
-  //   this.div().querySelector(".min").classList.remove("no-display")
-  //   this.div().querySelectorAll(".block").forEach(block => {
-  //     block.classList.remove("no-display")
-  //   })
-  // }
 
   toggleForm() {
     const formCont = this.div().querySelector('.form-container-outer')
@@ -151,24 +131,11 @@ class Genre {
     formCont.classList.toggle("no-display")
   }
 
-  // bookDiv() {
-  //   return this.div().querySelector(".books")
-  // }
-
   div() {
     return document.getElementById(this.id)
   }
   
   books() {
     return Book.all.filter(book => book.genre_id === this.id)
-  }
-
-  bookCardsDiv() {
-    return this.div().querySelector(".books")
-  }
-
-  bookCards(genreDiv) {
-    const bookCardsDiv = genreDiv.querySelector(".books")
-    this.books().forEach(book => bookCardsDiv.append(book.bookCard()))
   }
 }
