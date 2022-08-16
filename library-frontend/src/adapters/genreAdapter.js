@@ -10,7 +10,7 @@ class GenreAdapter {
         const genre = new Genre(obj)
         Book.initBooks(obj.books)
       })
-      Genre.noGenresDiv()
+      Genre.toggleNoGenresDiv()
       Genre.renderGenres()
     })
   }
@@ -29,17 +29,10 @@ class GenreAdapter {
       })
     })
     .then(resp => resp.json())
-    // .then(resp => {
-    //   if (resp === 201 ) { degugger }
-    //   else {
-    //     debugger
-    //     throw new Error(resp.statusText)}})
-    //   .catch(err => console.log(err))
     .then(json => {
-      // console.log(json.id)
       const genre = new Genre(json)
-      Genre.noGenresDiv()
-      genre.renderGenre()
+      Genre.toggleNoGenresDiv()
+      genre.render()
     })
     document.getElementById("genre-form").reset()
   }
@@ -53,12 +46,7 @@ class GenreAdapter {
           "Accept": "application/json"
         }
       })
-      .then(resp => {
-        debugger
-        if (resp.ok) {
-          Genre.delete(this)
-          Genre.noGenresDiv()
-        }
-      })
+      Genre.delete(this)
+      Genre.toggleNoGenresDiv()
   }  
 }
